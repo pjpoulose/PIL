@@ -12,7 +12,7 @@
 [![Cursor](https://img.shields.io/badge/Cursor-supported-111111)](references/mcp_clients.md)
 [![Claude Desktop](https://img.shields.io/badge/Claude_Desktop-supported-CC785C)](references/mcp_clients.md)
 
-**🚀 Get started · 🔁 How it works · 🤖 Other AI tools · 📦 What's inside**
+**<img src="assets/icons/launch.svg" width="16"> Get started · [<img src="assets/icons/cycle.svg" width="16"> How it works](#how-it-works) · [<img src="assets/icons/chip.svg" width="16"> Other AI tools](#ask-your-library-from-other-ai-tools) · [<img src="assets/icons/box.svg" width="16"> What's inside](#whats-inside)**
 
 ---
 
@@ -38,7 +38,7 @@
 > - Mac / Linux: `curl -fsSL https://raw.githubusercontent.com/pjpoulose/PIL/master/bootstrap.sh | bash`
 > - Windows (PowerShell): `irm https://raw.githubusercontent.com/pjpoulose/PIL/master/bootstrap.ps1 | iex`
 >
-> Then build your library with the commands in [🛠️ Manual setup](#-manual-setup-do-it-yourself).
+> Then build your library with the commands in [Manual setup](#manual-setup-do-it-yourself).
 > </details>
 
 ---
@@ -51,24 +51,24 @@ Every day you save posts you'll never find again. **PIL (Personal Instagram Libr
 
 *Concept mockup with sample data — your library looks like this, with your posts.*
 
-### 🤖 Want your Claude, Codex, or Cursor to access this?
+### <img src="assets/icons/chip.svg" width="22"> Want your Claude, Codex, or Cursor to access this?
 
 Connect the read-only MCP server and your other AI tools can query your library
 live — always current, nothing to re-upload. Your Muse can wire it up for you.
-[How to connect →](#-ask-your-library-from-other-ai-tools)
+[How to connect →](#ask-your-library-from-other-ai-tools)
 
-## 🔁 How it works
+## <img src="assets/icons/cycle.svg" width="22"> How it works
 
 ```mermaid
 flowchart LR
-    A["📸 Instagram<br/>saved posts"] -->|"ingest"| B["🗄️ Local SQLite<br/>on your machine"]
-    B -->|"vision AI<br/>deep read"| C["🧠 Summaries, key points,<br/>how-tos, links, tags"]
-    C --> D["🔍 Query two ways"]
-    D --> E["⚡ MCP server<br/>Cursor, Claude Code, Desktop"]
-    D --> F["📄 Static JSON export<br/>any AI tool"]
+    A["Instagram saved posts"] -->|"ingest"| B["Local SQLite on your machine"]
+    B -->|"vision AI<br/>deep read"| C["Summaries, key points, how-tos, links, tags"]
+    C --> D["Query two ways"]
+    D --> E["MCP server — Cursor, Claude Code, Desktop"]
+    D --> F["Static JSON export — any AI tool"]
 ```
 
-## 🛠️ Manual setup (do it yourself)
+## <img src="assets/icons/wrench.svg" width="22"> Manual setup (do it yourself)
 
 <details>
 <summary>Expand — only needed if you're skipping the 3-step Muse flow at the top.</summary>
@@ -110,11 +110,11 @@ python3 bin/mcp_server.py    # read-only, stdio — Ctrl-C to stop
 That's it. Re-run `ingest_saved.py` whenever you save new posts; `extract_content.py`
 only processes posts it hasn't seen yet.
 
-**The app:** ask your Muse to build and send it — see [📲 Your library as an app](#-your-library-as-an-app).
+**The app:** ask your Muse to build and send it — see [Your library as an app](#your-library-as-an-app).
 
 </details>
 
-## 🆚 Why not just scroll your saved tab?
+## <img src="assets/icons/columns.svg" width="22"> Why not just scroll your saved tab?
 
 | | Instagram saved tab | PIL |
 |---|---|---|
@@ -124,7 +124,7 @@ only processes posts it hasn't seen yet.
 | Use it inside your AI tools | Screenshots and retyping | MCP server or JSON export |
 | Where your data lives | Meta's servers | Your machine, SQLite |
 
-## 🤖 Ask your library from other AI tools
+## <img src="assets/icons/chip.svg" width="22"> Ask your library from other AI tools
 
 **Live (recommended): MCP.** Point any MCP-compatible assistant at the
 read-only server and every question reads your current database — always
@@ -163,7 +163,7 @@ ask your Muse for a fresh copy after you save new posts.
 These files hold your personal Instagram data — keep them on your own machine
 and only share them with tools you trust.
 
-## 📲 Your library as an app
+## <img src="assets/icons/phone.svg" width="22"> Your library as an app
 
 Your Muse builds the app for you and sends it to you — for your computer and
 your phone. Just ask:
@@ -177,7 +177,7 @@ your phone. Just ask:
 
 No commands, no hosting setup, no terminal — your Muse takes care of all of it.
 
-## 📦 What's inside
+## <img src="assets/icons/box.svg" width="22"> What's inside
 
 ```
 pil/
@@ -203,7 +203,7 @@ pil/
     └── mcp_clients.md       # Cursor / Claude Code / Claude Desktop wiring
 ```
 
-## ❓ FAQ
+## <img src="assets/icons/question.svg" width="22"> FAQ
 
 **Do I need to know how to code?**
 No. Copy-paste the prompt at the top of this page into Muse — it does
@@ -242,7 +242,7 @@ Tell your Muse what you saw — it can diagnose and fix it directly. (Running
 the manual setup below? Re-run the installer — it's safe to run any number of
 times — and check `python3 --version` is 3.11+.)
 
-## 🔧 Troubleshooting
+## <img src="assets/icons/gear.svg" width="22"> Troubleshooting
 
 Something wrong? Tell your Muse what happened — it can diagnose and fix most
 issues itself.
@@ -255,12 +255,12 @@ Running the manual setup yourself?
 - `429` rate limits are handled with backoff inside the scripts.
 - The MCP server needs `mcp<2` in the Python that runs it (2.x renamed the API).
 
-## 🤝 Contributing
+## <img src="assets/icons/users.svg" width="22"> Contributing
 
 PRs and issues welcome — better extraction prompts, new query clients, new
 export formats. Fork it, ship it, make it yours. If it saved you from the
-endless scroll, a ⭐ helps others find it.
+endless scroll, a star helps others find it.
 
-## 📜 License
+## <img src="assets/icons/doc.svg" width="22"> License
 
 MIT. Built by [Paul Poulose](https://github.com/pjpoulose).
