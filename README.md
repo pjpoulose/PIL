@@ -68,6 +68,7 @@ python3 extract_content.py   # vision-AI deep read (batches of 25)
 python3 tag_all.py           # programmatic tags for untagged posts
 python3 export_web.py        # static JSON export -> <data_dir>/web_data.json
 python3 export_html.py       # searchable HTML dashboard -> <data_dir>/pil_library.html
+python3 export_pwa.py        # installable PWA bundle -> <data_dir>/pwa/
 ```
 
 **2. Ask it anything** — via the live MCP server *or* the static export:
@@ -133,6 +134,31 @@ read-notes per post. No server, no network; it works straight from disk.
 Re-run `export_html.py` whenever you save new posts to refresh it. The file
 holds your data, so keep it on your own machine like anything personal.
 
+### Get the browser install prompt (PWA)
+
+Prefer the real *Install app* prompt over a manual shortcut? `export_pwa.py`
+builds a small installable bundle — `index.html`, `manifest.json`, an offline
+service worker, and icons — into `<data_dir>/pwa/`:
+
+```bash
+python3 bin/export_pwa.py
+cd ~/.local/share/pil/pwa && python3 -m http.server 8080
+# open http://localhost:8080
+```
+
+`localhost` counts as a secure context in every browser, so installation and
+offline mode work with no HTTPS setup. What each browser does:
+
+- **Chrome / Edge** (desktop & Android): offers the **Install** prompt
+  automatically once the page loads.
+- **Safari** (macOS): *File → Add to Dock…*; (iOS): *Share → Add to Home
+  Screen*. No auto-prompt — Apple reserves that for the menu, by design.
+- **Firefox**: *Add to Home Screen* (Android), or bookmark / pin the
+  localhost page manually on desktop.
+
+The single-file `pil_library.html` above keeps working as before for anyone
+who'd rather just double-click a file — no server needed.
+
 ## 📦 What's inside
 
 ```
@@ -150,6 +176,7 @@ pil/
 │   ├── tag_all.py           # step 3: tagging
 │   ├── export_web.py        # step 4: static export
 │   ├── export_html.py       # step 5: self-contained HTML dashboard
+│   ├── export_pwa.py        # step 6: installable PWA bundle (manifest + SW + icons)
 │   └── mcp_server.py        # read-only MCP server (stdio)
 └── references/
     └── mcp_clients.md       # Cursor / Claude Code / Claude Desktop wiring

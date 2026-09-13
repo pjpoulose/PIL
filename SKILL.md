@@ -28,6 +28,10 @@ from `PIL_CONFIG` env var, `./pil.config.json`, then `~/.config/pil/pil.config.j
 - `bin/export_html.py [output_path]` — step 5: self-contained HTML dashboard
   (`pil_library.html`): search, rooms, tags, sorting, read-notes. Works offline
   from disk; the user can keep it on their Desktop as a web app.
+- `bin/export_pwa.py [output_dir]` — step 6: installable PWA bundle
+  (`index.html` + `manifest.json` + offline service worker + icons) for the
+  real browser *Install* prompt. Serve over localhost; Chrome/Edge prompt
+  automatically, Safari/Firefox add manually (see README).
 - `bin/mcp_server.py` — read-only MCP server over stdio. Tools: `search_posts`,
   `get_post`, `list_folders`, `list_tags`, `library_stats`.
 

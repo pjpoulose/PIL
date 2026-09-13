@@ -39,6 +39,7 @@ PAGE = r"""<!DOCTYPE html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>__TITLE__</title>
+__PWA_HEAD__
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:#141414;color:#EDE8DB;font-family:-apple-system,"Segoe UI",Inter,sans-serif;-webkit-font-smoothing:antialiased}
@@ -276,6 +277,7 @@ document.getElementById('sort').addEventListener('change', e=>{state.sort=e.targ
 document.getElementById('more').addEventListener('click', ()=>render(true));
 renderRooms(); renderTags(); render(false);
 </script>
+__PWA_SW__
 </body>
 </html>
 """
@@ -283,12 +285,25 @@ renderRooms(); renderTags(); render(false);
 SNIPPET_LEN = 280
 
 
-def main():
-    cfg = load_config()
-    out_path = (sys.argv[1] if len(sys.argv) > 1
-                else os.path.join(os.path.expanduser(cfg["data_dir"]), "pil_library.html"))
-    db = db_connect(cfg, read_only=True)
+PWA_HEAD = """<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#141414">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="PIL">
+<link rel="apple-touch-icon" href="icon-180.png">"""
 
+PWA_SW = """<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function () {
+    navigator.serviceWorker.register('sw.js').catch(function () {});
+  });
+}
+</script>"""
+
+
+def gather_data(db):
+    """Read everything the dashboard needs. db must already be connected."""
     folders = [{"id": r["collection_id"], "name": r["name"]}
                for r in q(db, "SELECT collection_id, name, item_count FROM folders ORDER BY item_count DESC")]
 
@@ -336,42 +351,62 @@ def main():
             p.update({"summary": "", "key_points": [], "howto": "", "links": []})
         posts.append(p)
 
-    n_posts = len(posts)
-    n_summ = sum(1 for p in posts if p["summary"])
-    n_kp = sum(len(p["key_points"]) for p in posts)
-    n_how = sum(1 for p in posts if p["howto"])
-    n_linkposts = sum(1 for p in posts if p["links"])
-    n_know = sum(1 for p in posts if p["summary"] or p["key_points"] or p["howto"])
+    posts_n = len(posts)
+    stats = {
+        "posts": posts_n,
+        "summaries": sum(1 for p in posts if p["summary"]),
+        "key_points": sum(len(p["key_points"]) for p in posts),
+        "howtos": sum(1 for p in posts if p["howto"]),
+        "link_posts": sum(1 for p in posts if p["links"]),
+        "with_knowledge": sum(1 for p in posts if p["summary"] or p["key_points"] or p["howto"]),
+        "rooms": len(folders),
+    }
+    return {"folders": folders, "top_tags": top_tags, "posts": posts, "stats": stats}
 
+
+def render_page(d, pwa=False):
+    """Build the dashboard HTML from gather_data() output."""
+    folders, top_tags, posts, stats = d["folders"], d["top_tags"], d["posts"], d["stats"]
     data = {"folders": folders, "top_tags": top_tags, "posts": posts}
     payload = json.dumps(data, separators=(",", ":")).replace("</", "<\\/")
     fmt = lambda n: f"{n:,}"
     page = (PAGE
-            .replace("__TITLE__", html.escape(f"PIL — Personal Instagram Library ({fmt(n_posts)} posts)"))
-            .replace("__POSTS__", fmt(n_posts))
-            .replace("__SUMMARIES__", fmt(n_summ))
-            .replace("__KEYPOINTS__", fmt(n_kp))
-            .replace("__HOWTOS__", fmt(n_how))
-            .replace("__LINKS__", fmt(n_linkposts))
-            .replace("__WITHKNOW__", fmt(n_know))
-            .replace("__ROOMS__", fmt(len(folders)))
+            .replace("__TITLE__", html.escape(f"PIL — Personal Instagram Library ({fmt(stats['posts'])} posts)"))
+            .replace("__POSTS__", fmt(stats["posts"]))
+            .replace("__SUMMARIES__", fmt(stats["summaries"]))
+            .replace("__KEYPOINTS__", fmt(stats["key_points"]))
+            .replace("__HOWTOS__", fmt(stats["howtos"]))
+            .replace("__LINKS__", fmt(stats["link_posts"]))
+            .replace("__WITHKNOW__", fmt(stats["with_knowledge"]))
+            .replace("__ROOMS__", fmt(stats["rooms"]))
             .replace("__PAGE__", str(PAGE_SIZE))
             .replace("__PALETTE__", json.dumps(PALETTE))
             .replace("__DATA__", payload)
+            .replace("__PWA_HEAD__", PWA_HEAD if pwa else "")
+            .replace("__PWA_SW__", PWA_SW if pwa else "")
             .replace("__FOOTER__", html.escape(
                 f"Generated locally by PIL on {time.strftime('%Y-%m-%d')} · your data never left this machine")))
-    # sanity: no unreplaced tokens remain
-    assert "__" not in page.replace("__", "\x00", 0) or True
     for tok in ("__TITLE__", "__POSTS__", "__DATA__", "__PAGE__", "__PALETTE__",
                 "__SUMMARIES__", "__KEYPOINTS__", "__HOWTOS__", "__LINKS__",
-                "__WITHKNOW__", "__ROOMS__", "__FOOTER__"):
+                "__WITHKNOW__", "__ROOMS__", "__FOOTER__",
+                "__PWA_HEAD__", "__PWA_SW__"):
         assert tok not in page, tok
+    return page
+
+
+def main():
+    cfg = load_config()
+    out_path = (sys.argv[1] if len(sys.argv) > 1
+                else os.path.join(os.path.expanduser(cfg["data_dir"]), "pil_library.html"))
+    db = db_connect(cfg, read_only=True)
+    d = gather_data(db)
+    page = render_page(d)
 
     os.makedirs(os.path.dirname(out_path) or ".", exist_ok=True)
     with open(out_path, "w", encoding="utf-8") as f:
         f.write(page)
     size = os.path.getsize(out_path)
-    print(f"[done] {n_posts} posts -> {out_path} ({size / 1024 / 1024:.1f} MB)", flush=True)
+    print(f"[done] {d['stats']['posts']} posts -> {out_path} ({size / 1024 / 1024:.1f} MB)", flush=True)
     db.close()
 
 
