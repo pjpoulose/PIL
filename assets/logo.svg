@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="PIL — Personal Instagram Library">
+  <rect width="256" height="256" rx="58" fill="#171310"/>
+  <circle cx="128" cy="118" r="66" fill="none" stroke="#EFE6D2" stroke-width="7"/>
+  <circle cx="128" cy="118" r="55" fill="none" stroke="#EFE6D2" stroke-width="2" opacity="0.55"/>
+  <text x="131" y="137" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="46" letter-spacing="6" fill="#EFE6D2">PIL</text>
+  <path d="M118 180 h20 v36 l-10 -8 l-10 8 z" fill="#C8402E"/>
+</svg>
