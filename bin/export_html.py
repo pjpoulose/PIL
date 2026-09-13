@@ -33,7 +33,7 @@ def q(db, sql, args=()):
     return [dict(zip(cols, r)) for r in cur.fetchall()]
 
 
-PAGE = """<!DOCTYPE html>
+PAGE = r"""<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -115,6 +115,8 @@ body{background:#141414;color:#EDE8DB;font-family:-apple-system,"Segoe UI",Inter
 .notes li{margin-bottom:8px;padding-left:18px;position:relative}
 .notes li::before{content:"—";position:absolute;left:0;color:#E0453A}
 .notes a{color:#EDE8DB}
+.notes .mdh{font-family:Georgia,serif;font-size:17px;color:#EDE8DB;margin:14px 0 6px}
+.notes strong{color:#EDE8DB;font-weight:600}
 .card .rdot{position:absolute;right:-2px;top:46%;width:7px;height:7px;background:#E0453A;border-radius:50%}
 .more{text-align:center;margin-top:20px}
 .more button{background:none;border:1px solid #2B2B2B;padding:14px 30px;font-family:ui-monospace,monospace;font-size:12px;letter-spacing:2px;color:#A39D8D;cursor:pointer}
@@ -186,6 +188,18 @@ body{background:#141414;color:#EDE8DB;font-family:-apple-system,"Segoe UI",Inter
 const PIL = JSON.parse(document.getElementById('pil-data').textContent);
 const PALETTE = __PALETTE__;
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const md = s => {
+  let e = esc(s).replace(/^#{2,3} (.*)$/gm, '<p class="mdh">$1</p>').replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+  const lines = e.split('\n'), out = []; let inList = false;
+  for(const ln of lines){
+    const m = ln.match(/^\s*-\s+(.*)/);
+    if(m){ if(!inList){ out.push('<ul>'); inList = true; } out.push('<li>'+m[1]+'</li>'); }
+    else { if(inList){ out.push('</ul>'); inList = false; } if(ln.trim()) out.push('<p>'+ln+'</p>'); }
+  }
+  if(inList) out.push('</ul>');
+  return out.join('');
+};
+const inlineMd = s => esc(s).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
 const state = { q:'', room:null, tag:null, sort:'new', shown:__PAGE__ };
 const folderName = id => (PIL.folders.find(f=>f.id===id)||{}).name || id;
 
@@ -206,11 +220,14 @@ function filtered(){
 function cardHTML(p, i, featured){
   const color = PALETTE[i % PALETTE.length];
   const room = p.folders.length ? folderName(p.folders[0]) : 'Saved';
-  const headline = esc(p.summary || p.snippet || 'Untitled post');
+  const full = p.summary || p.snippet || 'Untitled post';
+  const teaser = full.length > 280 ? full.slice(0, 280).trimEnd() + '…' : full;
+  const headline = esc(teaser);
   const links = (p.links||[]).map(u=>'<li><a href="'+esc(u)+'" target="_blank" rel="noopener">'+esc(u)+'</a></li>').join('');
-  const kps = (p.key_points||[]).map(k=>'<li>'+esc(k)+'</li>').join('');
-  const notes = (p.key_points&&p.key_points.length ? '<div class="sec"><span class="mono">Key points</span><ul>'+kps+'</ul></div>':'')
-    + (p.howto ? '<div class="sec"><span class="mono">How-to</span><p>'+esc(p.howto)+'</p></div>':'')
+  const kps = (p.key_points||[]).map(k=>'<li>'+inlineMd(k)+'</li>').join('');
+  const notes = (p.summary ? '<div class="sec"><span class="mono">Summary</span>'+md(p.summary)+'</div>' : '')
+    + (p.key_points&&p.key_points.length ? '<div class="sec"><span class="mono">Key points</span><ul>'+kps+'</ul></div>':'')
+    + (p.howto ? '<div class="sec"><span class="mono">How-to</span>'+md(p.howto)+'</div>':'')
     + (links ? '<div class="sec"><span class="mono">Links discussed</span><ul>'+links+'</ul></div>':'');
   return '<div class="card'+(featured?' featured':'')+'">'
     + '<div class="panel" style="background:'+color+'"><div class="prow"><span class="mono">'+esc(room)+'</span><span class="pnum">'+String(i+1).padStart(4,'0')+'</span></div><h3>'+headline+'</h3></div>'
@@ -230,7 +247,7 @@ function render(append){
   feat.innerHTML+=htmlF; grid.innerHTML+=htmlG;
   state.shown += slice.length;
   document.getElementById('count').textContent = list.length.toLocaleString()+' posts';
-  document.getElementById('title').textContent = state.q ? 'Results for \\u201c'+state.q+'\\u201d' : 'Browse PIL';
+  document.getElementById('title').textContent = state.q ? 'Results for \u201c'+state.q+'\u201d' : 'Browse PIL';
   document.getElementById('empty').style.display = list.length ? 'none' : 'block';
   document.getElementById('more').style.display = state.shown < list.length ? '' : 'none';
   document.getElementById('more').textContent = 'SHOW MORE · '+(list.length-state.shown).toLocaleString()+' REMAINING';
