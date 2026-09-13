@@ -14,6 +14,8 @@
 
 **Get started · [How it works](#how-it-works) · [Other AI tools](#ask-your-library-from-other-ai-tools) · [What's inside](#whats-inside)**
 
+mcp-name: io.github.pjpoulose/pil
+
 ---
 
 > ### Get PIL in 3 steps

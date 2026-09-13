@@ -1,0 +1,20 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "description": "PIL: local-first knowledge base for your Instagram saved posts, with a read-only MCP server.",
+  "name": "io.github.pjpoulose/pil",
+  "packages": [
+    {
+      "identifier": "personal-instagram-library",
+      "registryType": "pypi",
+      "transport": {
+        "type": "stdio"
+      },
+      "version": "0.1.1"
+    }
+  ],
+  "repository": {
+    "source": "github",
+    "url": "https://github.com/pjpoulose/PIL"
+  },
+  "version": "0.1.1"
+}
