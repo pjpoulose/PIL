@@ -37,7 +37,12 @@ flowchart LR
 
 ## ⬇️ Install
 
-Prerequisites: `python3`, and `instagram-cli` with your Instagram account linked
+**You need the Muse app.** PIL is a skill that runs inside [Muse](https://muse.ai)
+— Meta's AI assistant (web, iOS, Android). It does not run anywhere else:
+ingestion, deep reading, and querying all happen through your conversation with
+Muse. Install the skill there first, then continue below on your own machine.
+
+Other prerequisites: `python3`, and `instagram-cli` with your Instagram account linked
 (run `instagram-cli accounts` — it must list your account).
 
 ```bash
@@ -62,6 +67,7 @@ python3 ingest_saved.py      # collections + saved posts
 python3 extract_content.py   # vision-AI deep read (batches of 25)
 python3 tag_all.py           # programmatic tags for untagged posts
 python3 export_web.py        # static JSON export -> <data_dir>/web_data.json
+python3 export_html.py       # searchable HTML dashboard -> <data_dir>/pil_library.html
 ```
 
 **2. Ask it anything** — via the live MCP server *or* the static export:
@@ -106,6 +112,27 @@ attempts, and limit abuse all verified blocked.)
 280-character caption snippet plus deep-read knowledge where available. Upload
 that file into any AI chat tool to ask questions over your library.
 
+## 🖥️ Your library as a desktop web app
+
+`export_html.py` writes `<data_dir>/pil_library.html` — a single self-contained
+file with your whole library: search, rooms, tags, sorting, and expandable
+read-notes per post. No server, no network; it works straight from disk.
+
+**Keep it on your desktop like an app:**
+
+1. Run `python3 bin/export_html.py`, then move `pil_library.html` to your Desktop
+   (or anywhere you like).
+2. Double-click it — it opens in your browser, fully offline.
+3. To make it feel like a real app window instead of a browser tab:
+   - **Chrome / Edge:** ⋮ menu → *More tools* → *Create shortcut…* → tick
+     *Open as window* → Create. Launch it from your dock/taskbar from then on.
+   - **Safari:** *File* → *Add to Dock…* (macOS Sonoma and later).
+   - **Firefox:** double-click the file, or drag it to the dock/taskbar for a
+     one-click opener.
+
+Re-run `export_html.py` whenever you save new posts to refresh it. The file
+holds your data, so keep it on your own machine like anything personal.
+
 ## 📦 What's inside
 
 ```
@@ -122,6 +149,7 @@ pil/
 │   ├── extract_content.py   # step 2: vision-AI extraction (resume-safe)
 │   ├── tag_all.py           # step 3: tagging
 │   ├── export_web.py        # step 4: static export
+│   ├── export_html.py       # step 5: self-contained HTML dashboard
 │   └── mcp_server.py        # read-only MCP server (stdio)
 └── references/
     └── mcp_clients.md       # Cursor / Claude Code / Claude Desktop wiring

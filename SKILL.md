@@ -25,6 +25,9 @@ from `PIL_CONFIG` env var, `./pil.config.json`, then `~/.config/pil/pil.config.j
   for posts with fewer than 3 tags.
 - `bin/export_web.py [output_path]` — step 4: static JSON export for manual use
   with any AI tool. Captions are truncated to snippets, never verbatim.
+- `bin/export_html.py [output_path]` — step 5: self-contained HTML dashboard
+  (`pil_library.html`): search, rooms, tags, sorting, read-notes. Works offline
+  from disk; the user can keep it on their Desktop as a web app.
 - `bin/mcp_server.py` — read-only MCP server over stdio. Tools: `search_posts`,
   `get_post`, `list_folders`, `list_tags`, `library_stats`.
 
