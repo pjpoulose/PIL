@@ -12,32 +12,34 @@
 [![Cursor](https://img.shields.io/badge/Cursor-supported-111111)](references/mcp_clients.md)
 [![Claude Desktop](https://img.shields.io/badge/Claude_Desktop-supported-CC785C)](references/mcp_clients.md)
 
-**⬇️ Install · ⚡ Quick start · 🔁 How it works · 🔍 Query it · 📦 What's inside**
+**🚀 Get started · 🔁 How it works · 🤖 Other AI tools · 📦 What's inside**
 
 ---
 
-> ### 📲 Install PIL — no technical skills needed
+> ### Get PIL in 3 steps
 >
-> **On your computer**
-> 1. Copy-paste **one command** into your terminal — it sets up everything (Python included):
->    - Mac / Linux: `curl -fsSL https://raw.githubusercontent.com/pjpoulose/PIL/master/bootstrap.sh | bash`
->    - Windows (in PowerShell): `irm https://raw.githubusercontent.com/pjpoulose/PIL/master/bootstrap.ps1 | iex`
-> 2. Copy-paste the build command it shows you — this reads your saved posts (takes a while, runs on its own).
-> 3. Unzip the app folder it creates, double-click **Start PIL**, click **Install** in your browser. Done — PIL now lives on your computer like any other app.
+> **1.** Copy-paste this into Muse:
 >
-> **On your phone**
-> 1. On your computer, run the one publish command in [📱 Take it on your phone](#-take-it-on-your-phone).
-> 2. A QR code appears on screen — scan it with your phone's camera.
-> 3. Tap **Install app** (Android) or **Share → Add to Home Screen** (iPhone). Done.
+>         Clone https://github.com/pjpoulose/PIL into your workspace and follow its
+>         SKILL.md to set up my Personal Instagram Library. Work through it step by
+>         step — install, build the library from my saved posts, and hand me the
+>         installable app.
 >
-> Want zero terminal? Copy-paste this into your AI assistant — it fetches PIL and
-> does the whole setup with you, asking only for things only you can do (like
-> linking your Instagram account):
+> **2.** When it asks, link your Instagram (one tap in your browser).
 >
->     Clone https://github.com/pjpoulose/PIL into your workspace and follow its
->     SKILL.md to set up my Personal Instagram Library. Work through it step by
->     step — install, build the library from my saved posts, and hand me the
->     installable app.
+> **3.** Download the app file it sends you → unzip → double-click **Start PIL** → click **Install**.
+>
+> That's the whole thing. Your Muse does the setup, the reading, and the building.
+> For your phone afterward, see [📱 Take it on your phone](#-take-it-on-your-phone).
+>
+> <details>
+> <summary>Prefer to do it yourself? One command sets everything up.</summary>
+>
+> - Mac / Linux: `curl -fsSL https://raw.githubusercontent.com/pjpoulose/PIL/master/bootstrap.sh | bash`
+> - Windows (PowerShell): `irm https://raw.githubusercontent.com/pjpoulose/PIL/master/bootstrap.ps1 | iex`
+>
+> Then build your library with the commands in [🛠️ Manual setup](#-manual-setup-do-it-yourself).
+> </details>
 
 ---
 
@@ -60,24 +62,14 @@ flowchart LR
     D --> F["📄 Static JSON export<br/>any AI tool"]
 ```
 
-## ⬇️ Install
-
-**Easiest: run the one-line installer** — it installs Python if you don't have
-it, downloads PIL, installs its one dependency, and sets up your config:
-
-- Mac / Linux: `curl -fsSL https://raw.githubusercontent.com/pjpoulose/PIL/master/bootstrap.sh | bash`
-- Windows (PowerShell): `irm https://raw.githubusercontent.com/pjpoulose/PIL/master/bootstrap.ps1 | iex`
+## 🛠️ Manual setup (do it yourself)
 
 <details>
-<summary>Manual install (if you prefer to do each step yourself)</summary>
+<summary>Expand — only needed if you're skipping the 3-step Muse flow at the top.</summary>
 
-**You need the Muse app.** PIL is a skill that runs inside [Muse](https://muse.ai)
-— Meta's AI assistant (web, iOS, Android). It does not run anywhere else:
-ingestion, deep reading, and querying all happen through your conversation with
-Muse. Install the skill there first, then continue below on your own machine.
-
-Other prerequisites: `python3`, and `instagram-cli` with your Instagram account linked
-(run `instagram-cli accounts` — it must list your account).
+**Prerequisites:** `python3` (3.11+) and `instagram-cli` with your Instagram
+account linked (run `instagram-cli accounts` — it must list your account).
+The one-line installer at the top of this page handles all of this for you.
 
 ```bash
 # 1. Get the code
@@ -90,11 +82,8 @@ cp pil.config.example.json ~/.config/pil/pil.config.json
 # 3. MCP server dependency
 pip install "mcp<2"
 ```
-</details>
 
-## ⚡ Quick start
-
-**1. Build your library** (each step is resume-safe — re-run any time):
+**Build your library** (each step is resume-safe — re-run any time):
 
 ```bash
 cd bin
@@ -106,7 +95,7 @@ python3 export_html.py       # searchable HTML dashboard -> <data_dir>/pil_libra
 python3 export_pwa.py        # installable PWA bundle -> <data_dir>/pwa/
 ```
 
-**2. Ask it anything** — via the live MCP server *or* the static export:
+**Ask it anything** — via the live MCP server *or* the static export:
 
 ```bash
 python3 bin/mcp_server.py    # read-only, stdio — Ctrl-C to stop
@@ -115,12 +104,14 @@ python3 bin/mcp_server.py    # read-only, stdio — Ctrl-C to stop
 That's it. Re-run `ingest_saved.py` whenever you save new posts; `extract_content.py`
 only processes posts it hasn't seen yet.
 
-**3. Install it like an app** — no Python needed from here on:
+**Install it like an app** — no Python needed from here on:
 
 - **Computer:** [Get the browser install prompt](#get-the-browser-install-prompt-pwa--one-click)
   — unzip the PWA folder, double-click the launcher for your OS, click Install.
 - **Phone:** [Take it on your phone](#-take-it-on-your-phone) — one publish
   command, then scan the QR code with your phone.
+
+</details>
 
 ## 🆚 Why not just scroll your saved tab?
 
@@ -154,6 +145,28 @@ attempts, and limit abuse all verified blocked.)
 `export_web.py` writes `<data_dir>/web_data.json`: every post with a
 280-character caption snippet plus deep-read knowledge where available. Upload
 that file into any AI chat tool to ask questions over your library.
+
+## 🤖 Use your library with other AI tools
+
+Your library isn't locked to the app — point any AI tool at it:
+
+**Any AI chat (Claude, ChatGPT, …)** — attach `web_data.json` (built by
+`export_web.py`, in your data dir): every post with its deep-read knowledge in
+one file. Ask questions over it like any document. It's a snapshot — re-export
+after you save new posts.
+
+**Coding assistants (Claude Code, Cursor, …)** — connect the read-only MCP
+server (`bin/mcp_server.py` over stdio) and they can search posts, read
+summaries, and pull how-tos live. See
+[references/mcp_clients.md](references/mcp_clients.md) for wiring; any
+MCP-compatible client works.
+
+**Directly (advanced)** — the database is plain SQLite at
+`<data_dir>/pil.sqlite` (schema in `schema.sql`). Open it read-only with any
+SQLite tool.
+
+These files hold your personal Instagram data — keep them on your own machine
+and only share them with tools you trust.
 
 ## 🖥️ Your library as a desktop web app
 
