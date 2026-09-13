@@ -51,6 +51,12 @@ Every day you save posts you'll never find again. **PIL (Personal Instagram Libr
 
 *Concept mockup with sample data — your library looks like this, with your posts.*
 
+### 🤖 Want your Claude, Codex, or Cursor to access this?
+
+Connect the read-only MCP server and your other AI tools can query your library
+live — always current, nothing to re-upload. Your Muse can wire it up for you.
+[How to connect →](#-ask-your-library-from-other-ai-tools)
+
 ## 🔁 How it works
 
 ```mermaid
