@@ -268,6 +268,66 @@ Function WaitForPil(p)
   WaitForPil = False
 End Function
 
+Function PortListenerPid(p)
+  ' PID with a LISTENING socket on 127.0.0.1:p, or "" if none.
+  PortListenerPid = ""
+  On Error Resume Next
+  Dim o, line, parts
+  Set o = sh.Exec("cmd /c netstat -ano | findstr LISTENING | findstr :" & p & " ")
+  Do While Not o.StdOut.AtEndOfStream
+    line = Trim(o.StdOut.ReadLine())
+    If InStr(line, ":" & p & " ") > 0 Then
+      parts = Split(line)
+      PortListenerPid = parts(UBound(parts))
+      Exit Function
+    End If
+  Loop
+  On Error GoTo 0
+End Function
+
+Function HttpAnswers(p)
+  ' True if something on 127.0.0.1:p completes an HTTP request.
+  HttpAnswers = False
+  On Error Resume Next
+  Dim h
+  Set h = CreateObject("MSXML2.XMLHTTP")
+  h.open "GET", "http://127.0.0.1:" & p & "/", False
+  h.send
+  If Err.Number = 0 Then HttpAnswers = True
+  On Error GoTo 0
+End Function
+
+Function IsOurZombie(pid)
+  ' True if pid is a python.exe whose command line serves via http.server.
+  IsOurZombie = False
+  On Error Resume Next
+  Dim o, line
+  Set o = sh.Exec("cmd /c wmic process where ""ProcessId=" & pid & \"\"\" get CommandLine /format:value")
+  Do While Not o.StdOut.AtEndOfStream
+    If InStr(LCase(o.StdOut.ReadLine()), "http.server") > 0 Then IsOurZombie = True
+  Loop
+  On Error GoTo 0
+End Function
+
+Sub ReclaimPort(p)
+  ' A previous broken PIL server may hold the port without answering (its
+  ' pipes died with its launcher). Reclaim it - but only if it's silent AND
+  ' ours; a user's own answering server is left strictly alone.
+  Dim pid
+  pid = PortListenerPid(p)
+  If pid = "" Then Exit Sub
+  If HttpAnswers(p) Then
+    Log "port " & p & " answers (not ours) - leaving alone"
+    Exit Sub
+  End If
+  If IsOurZombie(pid) Then
+    Log "reclaiming zombie PIL server on port " & p & " (pid " & pid & ")"
+    sh.Run "taskkill /PID " & pid & " /F", 0, True
+  Else
+    Log "port " & p & " silent but not a PIL server - leaving alone"
+  End If
+End Sub
+
 Log "--- Start PIL launched ---"
 
 ' Must run from the extracted folder, not from inside the zip.
@@ -318,30 +378,46 @@ If Left(ver, 8) <> "Python 3" Then
 End If
 
 ' Start the server on the first free port and wait until it answers.
-' Threaded server bound to 127.0.0.1: the browser opens the exact address
-' that was verified, so localhost/IPv6/proxy quirks can't get in the way.
-Dim started, proc, tried, srvCmd
+' The server is launched DETACHED (Run, hidden window): with Exec its
+' stdout/stderr are pipes owned by this script, and http.server logs every
+' request to stderr. The script's own checks pass while it's alive, but the
+' moment it exits those pipes break - the browser's first request then dies
+' inside the log call, closing the connection with zero bytes sent
+' (ERR_EMPTY_RESPONSE). Detached + file logging avoids that entirely, and
+' Python records its own PID so Stop keeps working. Bound to 127.0.0.1 and
+' the browser opens the exact address that was verified, so localhost/IPv6/
+' proxy quirks can't get in the way either.
+Dim started, tried, srvCmd, pyCode, rp, dead
 started = False : tried = ""
+' Reclaim ports held by previous broken instances, then drop any stale PID.
+For Each rp In Array(8080, 8081, 8082)
+  ReclaimPort rp
+Next
+If fso.FileExists(pidFile) Then fso.DeleteFile pidFile
+WScript.Sleep 500
 For Each p In Array(8080, 8081, 8082)
   tried = tried & p & " "
   Log "trying port " & p
-  srvCmd = "python -c " & Chr(34) & "from http.server import ThreadingHTTPServer as S, SimpleHTTPRequestHandler as H; S(('127.0.0.1'," & p & "),H).serve_forever()" & Chr(34)
-  On Error Resume Next
-  Set proc = sh.Exec(srvCmd)
-  If Err.Number <> 0 Then
-    Log "Exec failed: " & Err.Description
-    On Error GoTo 0
+  pyCode = "from http.server import ThreadingHTTPServer as S,SimpleHTTPRequestHandler as H;" & _
+           "import os;" & _
+           "s=S(('127.0.0.1'," & p & "),H);" & _
+           "open('pil-server.pid','w').write(str(os.getpid())+':" & p & "');" & _
+           "s.serve_forever()"
+  srvCmd = "python -c " & Chr(34) & pyCode & Chr(34)
+  sh.Run srvCmd, 0, False
+  If WaitForPil(p) Then
+    Log "serving on 127.0.0.1:" & p
+    sh.Run "http://127.0.0.1:" & p, 1, False
+    started = True
+    Exit For
   Else
-    On Error GoTo 0
-    If WaitForPil(p) Then
-      fso.CreateTextFile(pidFile, True).Write proc.ProcessID & ":" & p
-      Log "serving on 127.0.0.1:" & p & " (pid " & proc.ProcessID & ")"
-      sh.Run "http://127.0.0.1:" & p, 1, False
-      started = True
-      Exit For
-    Else
-      Log "no answer on " & p & ", killing"
-      On Error Resume Next : proc.Terminate : On Error GoTo 0
+    Log "no answer on " & p & ", cleaning up"
+    If fso.FileExists(pidFile) Then
+      dead = Split(fso.OpenTextFile(pidFile).ReadAll(), ":")
+      On Error Resume Next
+      sh.Run "taskkill /PID " & Trim(dead(0)) & " /F", 0, True
+      On Error GoTo 0
+      fso.DeleteFile pidFile
     End If
   End If
 Next
