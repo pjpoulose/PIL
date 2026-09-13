@@ -30,7 +30,14 @@
 > 2. A QR code appears on screen — scan it with your phone's camera.
 > 3. Tap **Install app** (Android) or **Share → Add to Home Screen** (iPhone). Done.
 >
-> Want zero terminal? Install the PIL skill in your AI assistant and say *"set up my Instagram library"* — it walks through everything with you.
+> Want zero terminal? Copy-paste this into your AI assistant — it fetches PIL and
+> does the whole setup with you, asking only for things only you can do (like
+> linking your Instagram account):
+>
+>     Clone https://github.com/pjpoulose/PIL into your workspace and follow its
+>     SKILL.md to set up my Personal Instagram Library. Work through it step by
+>     step — install, build the library from my saved posts, and hand me the
+>     installable app.
 
 ---
 
