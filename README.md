@@ -80,6 +80,13 @@ python3 bin/mcp_server.py    # read-only, stdio — Ctrl-C to stop
 That's it. Re-run `ingest_saved.py` whenever you save new posts; `extract_content.py`
 only processes posts it hasn't seen yet.
 
+**3. Install it like an app** — no Python needed from here on:
+
+- **Computer:** [Get the browser install prompt](#get-the-browser-install-prompt-pwa--one-click)
+  — unzip the PWA folder, double-click the launcher for your OS, click Install.
+- **Phone:** [Take it on your phone](#-take-it-on-your-phone) — one publish
+  command, then scan the QR code with your phone.
+
 ## 🆚 Why not just scroll your saved tab?
 
 | | Instagram saved tab | PIL |
