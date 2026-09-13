@@ -16,6 +16,24 @@
 
 ---
 
+> ### 📲 Install PIL — no technical skills needed
+>
+> **On your computer**
+> 1. Copy-paste **one command** into your terminal — it sets up everything (Python included):
+>    - Mac / Linux: `curl -fsSL https://raw.githubusercontent.com/pjpoulose/PIL/master/bootstrap.sh | bash`
+>    - Windows (in PowerShell): `irm https://raw.githubusercontent.com/pjpoulose/PIL/master/bootstrap.ps1 | iex`
+> 2. Copy-paste the build command it shows you — this reads your saved posts (takes a while, runs on its own).
+> 3. Unzip the app folder it creates, double-click **Start PIL**, click **Install** in your browser. Done — PIL now lives on your computer like any other app.
+>
+> **On your phone**
+> 1. On your computer, run the one publish command in [📱 Take it on your phone](#-take-it-on-your-phone).
+> 2. A QR code appears on screen — scan it with your phone's camera.
+> 3. Tap **Install app** (Android) or **Share → Add to Home Screen** (iPhone). Done.
+>
+> Want zero terminal? Install the PIL skill in your AI assistant and say *"set up my Instagram library"* — it walks through everything with you.
+
+---
+
 Every day you save posts you'll never find again. **PIL (Personal Instagram Library)** turns your Instagram saved collection into a private knowledge base on your own machine: every post deep-read by vision AI — narrative summaries, key points, how-to steps, links it discusses, automatic tags — searchable in seconds and queryable live from your AI coding tools.
 
 > **Code is shared, data stays home.** This repo contains only code, the database schema, config examples, and docs. Your saved posts, captions, and account details never leave your computer — ingestion, extraction, search, and the MCP server all run locally. A `.gitignore` blocks databases, configs, and exports from ever being committed.
@@ -37,6 +55,15 @@ flowchart LR
 
 ## ⬇️ Install
 
+**Easiest: run the one-line installer** — it installs Python if you don't have
+it, downloads PIL, installs its one dependency, and sets up your config:
+
+- Mac / Linux: `curl -fsSL https://raw.githubusercontent.com/pjpoulose/PIL/master/bootstrap.sh | bash`
+- Windows (PowerShell): `irm https://raw.githubusercontent.com/pjpoulose/PIL/master/bootstrap.ps1 | iex`
+
+<details>
+<summary>Manual install (if you prefer to do each step yourself)</summary>
+
 **You need the Muse app.** PIL is a skill that runs inside [Muse](https://muse.ai)
 — Meta's AI assistant (web, iOS, Android). It does not run anywhere else:
 ingestion, deep reading, and querying all happen through your conversation with
@@ -56,6 +83,7 @@ cp pil.config.example.json ~/.config/pil/pil.config.json
 # 3. MCP server dependency
 pip install "mcp<2"
 ```
+</details>
 
 ## ⚡ Quick start
 
@@ -199,6 +227,8 @@ pil/
 ├── LICENSE                  # MIT
 ├── schema.sql               # the five tables: folders, posts, post_folders, knowledge, tags
 ├── pil.config.example.json  # copy to pil.config.json and set your account_id
+├── bootstrap.sh             # one-line installer for Mac/Linux
+├── bootstrap.ps1            # one-line installer for Windows
 ├── bin/
 │   ├── pil_common.py        # config resolution + DB helpers
 │   ├── ingest_saved.py      # step 1: ingest (resume-safe)
@@ -212,6 +242,47 @@ pil/
 └── references/
     └── mcp_clients.md       # Cursor / Claude Code / Claude Desktop wiring
 ```
+
+## ❓ FAQ
+
+**Do I need to know how to code?**
+No. The one-line installer at the top of this page handles setup — copy-paste
+is the hardest part. If even that feels like too much, install the PIL skill in
+your AI assistant and say *"set up my Instagram library"*; it does everything
+with you.
+
+**Where does my Instagram data go?**
+Nowhere. *Code is shared, data stays home:* your saved posts, captions, and
+account details never leave your computer. Nothing is uploaded to us — there is
+no "us"; there's no server, no account, no cloud.
+
+**Does it cost anything?**
+PIL is free and open-source (MIT). There is no subscription and no account to
+create. The AI deep-read step runs through your own Instagram/AI setup.
+
+**Does the app work offline?**
+Yes. Once installed, the desktop and phone apps run fully offline — search,
+rooms, tags, and answers all work without internet.
+
+**Which phones and computers?**
+Windows, Mac, and Linux for the desktop app; iPhone and Android for the phone
+app. On Android, tap **Install app** in Chrome; on iPhone, use Safari's
+**Share → Add to Home Screen**.
+
+**I saved new posts — how do I add them?**
+Re-run `python3 bin/ingest_saved.py` (only new posts are fetched), then
+re-run the export step for the app you use. The installer and scripts are all
+safe to re-run.
+
+**Can I share my library with someone?**
+Your library is files on your machine — you *can* copy them to someone else's
+computer, but they contain your personal Instagram data. Treat them like
+anything private: don't publish or upload them anywhere public.
+
+**Something failed — what now?**
+Re-run the installer; it's safe to run any number of times. Make sure Python
+is 3.11 or newer (`python3 --version`). If you're stuck, see
+[🔧 Troubleshooting](#-troubleshooting) or open an issue.
 
 ## 🔧 Troubleshooting
 
