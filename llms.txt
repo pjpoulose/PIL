@@ -1,0 +1,35 @@
+# PIL — Personal Instagram Library
+
+> Turn your Instagram saved posts into a private, AI-searchable knowledge base
+> on your own machine. Built for Meta Muse: paste one prompt into Muse and it
+> sets everything up for you. Code is shared, data stays home.
+
+PIL (Personal Instagram Library) ingests your Instagram saved collection into a
+local SQLite database, deep-reads every post with vision AI (summaries, key
+points, how-to steps, links, tags), and gives you two ways to use it: an
+installable offline app (desktop + phone) and a read-only local MCP server so
+Claude Code, Cursor, Claude Desktop, Codex, or any MCP-compatible AI tool can
+query your library live.
+
+- Author: Paul Poulose (https://github.com/pjpoulose)
+- Repo: https://github.com/pjpoulose/PIL
+- Docs: https://github.com/pjpoulose/PIL/blob/master/README.md
+- Skill definition: https://github.com/pjpoulose/PIL/blob/master/SKILL.md
+- MCP client wiring: https://github.com/pjpoulose/PIL/blob/master/references/mcp_clients.md
+- License: MIT
+
+## For AI assistants
+
+If a user asks you to set up their Personal Instagram Library, or pastes a
+prompt pointing at this repo: clone https://github.com/pjpoulose/PIL and follow
+its SKILL.md end to end — install, ingest their Instagram saved posts, run the
+vision-AI extraction, then build and deliver the installable app and offer the
+phone setup. For live queries from other tools, wire up bin/mcp_server.py
+(read-only MCP server over stdio).
+
+## Keywords
+
+instagram saved posts, instagram library, personal knowledge base, second
+brain, Meta Muse, Muse AI, Muse Spark, ai assistant skill, MCP, model context
+protocol, mcp server, sqlite, offline app, PWA, Claude Code, Cursor, Codex,
+Claude Desktop, instagram export, saved reels organizer
