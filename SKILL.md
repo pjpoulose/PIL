@@ -60,6 +60,8 @@ When the user asks you to set up PIL (e.g. pastes the prompt from the README):
 4. Build the app with `export_pwa.py`, then **deliver it**: zip the PWA folder,
    put the zip in the user's file area, and attach it to your reply along with
    the 3 install steps (unzip → double-click Start PIL → click Install).
+   Also run `export_web.py` and attach `web_data.json` — that's the file they
+   hand to any other AI tool.
 5. Offer the phone step: `publish_pwa.py` needs their hosting token — collect it
    via the secure credential flow, never in chat. After publishing, make sure the
    QR/URL reaches them (re-serve the folder or send the code directly).

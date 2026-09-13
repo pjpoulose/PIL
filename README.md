@@ -150,10 +150,11 @@ that file into any AI chat tool to ask questions over your library.
 
 Your library isn't locked to the app — point any AI tool at it:
 
-**Any AI chat (Claude, ChatGPT, …)** — attach `web_data.json` (built by
-`export_web.py`, in your data dir): every post with its deep-read knowledge in
-one file. Ask questions over it like any document. It's a snapshot — re-export
-after you save new posts.
+**Any AI chat (Claude, ChatGPT, …)** — ask your Muse to send you the
+`web_data.json` file (it builds it with `export_web.py`): every post with its
+deep-read knowledge in one file. Attach that file to any AI chat and ask
+questions over it like any document. It's a snapshot — ask your Muse for a
+fresh copy after you save new posts.
 
 **Coding assistants (Claude Code, Cursor, …)** — connect the read-only MCP
 server (`bin/mcp_server.py` over stdio) and they can search posts, read
