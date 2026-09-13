@@ -147,8 +147,14 @@ python3 bin/export_pwa.py
 Then it's three steps, no terminal skills needed:
 
 1. Unzip the `pwa` folder anywhere.
-2. Double-click **Start PIL** (`Start PIL.command` on Mac, `Start PIL.bat` on
-   Windows) — it starts a tiny local server and opens your browser for you.
+2. Launch it:
+   - **Mac**: double-click `Make Mac App.command` once — it builds a polished
+     `Start PIL.app` (proper icon, no terminal window). From then on,
+     double-click the app. First launch: right-click → *Open* to clear
+     Apple's one-time check.
+   - **Windows**: double-click `Start PIL.vbs` — no console window.
+     `Stop PIL.vbs` stops the server when you're done.
+   - **Linux**: double-click (or run) `Start PIL.command`.
 3. Click **Install** in the browser's address bar (Chrome/Edge).
 
 `localhost` counts as a secure context in every browser, so installation and

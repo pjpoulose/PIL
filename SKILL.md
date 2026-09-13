@@ -30,8 +30,11 @@ from `PIL_CONFIG` env var, `./pil.config.json`, then `~/.config/pil/pil.config.j
   from disk; the user can keep it on their Desktop as a web app.
 - `bin/export_pwa.py [output_dir]` — step 6: installable PWA bundle
   (`index.html` + `manifest.json` + offline service worker + icons) for the
-  real browser *Install* prompt. Serve over localhost; Chrome/Edge prompt
-  automatically, Safari/Firefox add manually (see README).
+  real browser *Install* prompt, plus one-click launchers: a Mac
+  `Start PIL.app` builder (no terminal window), hidden-console Windows
+  `Start/Stop PIL.vbs`, and a universal `Start PIL.command`. Serve over
+  localhost; Chrome/Edge prompt automatically, Safari/Firefox add manually
+  (see README).
 - `bin/mcp_server.py` — read-only MCP server over stdio. Tools: `search_posts`,
   `get_post`, `list_folders`, `list_tags`, `library_stats`.
 
