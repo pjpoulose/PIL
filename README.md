@@ -20,6 +20,10 @@ Every day you save posts you'll never find again. **PIL (Personal Instagram Libr
 
 > **Code is shared, data stays home.** This repo contains only code, the database schema, config examples, and docs. Your saved posts, captions, and account details never leave your computer — ingestion, extraction, search, and the MCP server all run locally. A `.gitignore` blocks databases, configs, and exports from ever being committed.
 
+![PIL dashboard concept — gallery of deep-read saved posts with a synthesized answer](assets/dashboard.png)
+
+*Concept mockup with sample data — your library looks like this, with your posts.*
+
 ## 🔁 How it works
 
 ```mermaid

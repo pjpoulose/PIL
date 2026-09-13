@@ -8,3 +8,6 @@ pil.config.json
 .understanding_done
 __pycache__/
 *.pyc
+
+# mockup build artifacts
+assets/mock-imgs/

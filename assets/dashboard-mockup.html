@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>PIL — Personal Instagram Library (concept mockup)</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #14110D; color: #EFE6D2; font-family: -apple-system, "Segoe UI", Inter, sans-serif; padding: 0 0 80px; }
+  .serif { font-family: Georgia, "Times New Roman", serif; }
+  header.top { display: flex; align-items: center; gap: 18px; padding: 28px 48px 22px; border-bottom: 1px solid #2A241C; }
+  .seal { width: 52px; height: 52px; border: 3px solid #EFE6D2; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: Georgia, serif; font-size: 17px; letter-spacing: 2px; position: relative; }
+  .seal::after { content: ""; position: absolute; bottom: -9px; left: 50%; transform: translateX(-50%); border: 5px solid transparent; border-top: 8px solid #C8402E; }
+  .brand h1 { font-family: Georgia, serif; font-size: 30px; font-weight: 400; letter-spacing: 1px; }
+  .brand p { font-size: 13px; color: #A79B83; letter-spacing: 3px; text-transform: uppercase; margin-top: 4px; }
+  .search { margin-left: auto; display: flex; }
+  .search input { width: 380px; background: #1E1913; border: 1px solid #3A3226; color: #EFE6D2; font-size: 15px; padding: 12px 18px; border-radius: 999px; outline: none; }
+  .search input::placeholder { color: #6E6350; }
+  .stats { display: flex; gap: 42px; padding: 26px 48px; border-bottom: 1px solid #2A241C; }
+  .stat b { font-family: Georgia, serif; font-size: 26px; font-weight: 400; display: block; }
+  .stat span { font-size: 12px; color: #A79B83; letter-spacing: 2px; text-transform: uppercase; }
+  .stat b em { color: #C8402E; font-style: normal; }
+  .rooms { display: flex; gap: 12px; padding: 26px 48px 6px; flex-wrap: wrap; }
+  .room { border: 1px solid #3A3226; border-radius: 999px; padding: 9px 20px; font-size: 14px; color: #CFC3AA; cursor: default; }
+  .room small { color: #6E6350; margin-left: 6px; }
+  .room.active { background: #EFE6D2; color: #14110D; border-color: #EFE6D2; font-weight: 600; }
+  .room.active small { color: #5A5041; }
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; padding: 26px 48px; }
+  .card { background: #1C1712; border: 1px solid #2A241C; border-radius: 14px; overflow: hidden; }
+  .card img { width: 100%; height: 230px; object-fit: cover; display: block; }
+  .card .body { padding: 18px 20px 20px; }
+  .creator { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: #C8402E; margin-bottom: 8px; }
+  .caption { font-family: Georgia, serif; font-size: 18px; line-height: 1.45; margin-bottom: 12px; }
+  .meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+  .folder { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; border: 1px solid #4A4030; color: #CFC3AA; padding: 4px 10px; border-radius: 999px; }
+  .tag { font-size: 12px; color: #8A7D64; }
+  .know { font-size: 13px; color: #A79B83; border-top: 1px solid #2A241C; padding-top: 12px; }
+  .know b { color: #EFE6D2; font-weight: 600; }
+  .know .dot { color: #C8402E; margin: 0 6px; }
+  .answer { margin: 8px 48px 0; background: #1C1712; border: 1px solid #2A241C; border-left: 3px solid #C8402E; border-radius: 0 14px 14px 0; padding: 24px 28px; }
+  .answer .kicker { font-size: 12px; letter-spacing: 3px; text-transform: uppercase; color: #C8402E; margin-bottom: 10px; }
+  .answer p { font-family: Georgia, serif; font-size: 19px; line-height: 1.6; color: #EFE6D2; }
+  .answer .cites { margin-top: 12px; font-size: 13px; color: #8A7D64; }
+  .answer .cites b { color: #CFC3AA; }
+  .mocktag { position: fixed; bottom: 18px; right: 22px; font-size: 12px; letter-spacing: 2px; color: #6E6350; text-transform: uppercase; background: rgba(20,17,13,.8); padding: 6px 12px; border-radius: 6px; }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="seal">PIL</div>
+  <div class="brand">
+    <h1>Personal Instagram Library</h1>
+    <p>Rediscover what caught your eye</p>
+  </div>
+  <div class="search"><input placeholder="Search 6,214 posts — try &quot;weeknight pasta&quot;"></div>
+</header>
+
+<div class="stats">
+  <div class="stat"><b>6,214</b><span>posts with knowledge</span></div>
+  <div class="stat"><b>5</b><span>rooms</span></div>
+  <div class="stat"><b>18,402</b><span>tags</span></div>
+  <div class="stat"><b><em>912</em></b><span>links discussed</span></div>
+</div>
+
+<div class="answer">
+  <div class="kicker">Synthesized answer</div>
+  <p>The fastest weeknight pastas in your library share one trick: the sauce finishes <i>in the pan</i>, emulsified with starchy pasta water — never jarred sauce reheated separately.</p>
+  <div class="cites">Grounded in <b>3 posts</b> — @bakewithmia · @nonnacooks · @pastalab</div>
+</div>
+
+<div class="rooms">
+  <div class="room active">All <small>6,214</small></div>
+  <div class="room">AI &amp; Tech <small>1,208</small></div>
+  <div class="room">Recipes <small>342</small></div>
+  <div class="room">Home Design <small>518</small></div>
+  <div class="room">Life Hacks <small>276</small></div>
+  <div class="room">Travel <small>194</small></div>
+</div>
+
+<div class="grid">
+  <div class="card">
+    <img src="mock-imgs/pilpasta.jpg" alt="">
+    <div class="body">
+      <div class="creator">@bakewithmia</div>
+      <div class="caption">15-minute creamy garlic parmesan pasta — the weeknight hero your rotation is missing</div>
+      <div class="meta"><span class="folder">Recipes</span><span class="tag">#pasta</span><span class="tag">#15-min</span><span class="tag">#dinner</span></div>
+      <div class="know"><b>Summary</b><span class="dot">·</span><b>Key points</b><span class="dot">·</span><b>How-to</b><span class="dot">·</span>1 link</div>
+    </div>
+  </div>
+  <div class="card">
+    <img src="mock-imgs/pilrag.jpg" alt="">
+    <div class="body">
+      <div class="creator">@aibuilderdaily</div>
+      <div class="caption">RAG pipeline anatomy: chunk, embed, retrieve, rerank — where most tutorials get it wrong</div>
+      <div class="meta"><span class="folder">AI &amp; Tech</span><span class="tag">#rag</span><span class="tag">#llm</span><span class="tag">#architecture</span></div>
+      <div class="know"><b>Summary</b><span class="dot">·</span><b>Key points</b><span class="dot">·</span>2 links</div>
+    </div>
+  </div>
+  <div class="card">
+    <img src="mock-imgs/piljapandi.jpg" alt="">
+    <div class="body">
+      <div class="creator">@studiomoss</div>
+      <div class="caption">Japandi living room: low oak furniture, limewash walls, one sculptural light</div>
+      <div class="meta"><span class="folder">Home Design</span><span class="tag">#japandi</span><span class="tag">#living-room</span></div>
+      <div class="know"><b>Summary</b><span class="dot">·</span><b>Key points</b><span class="dot">·</span><b>How-to</b></div>
+    </div>
+  </div>
+  <div class="card">
+    <img src="mock-imgs/piltension.jpg" alt="">
+    <div class="body">
+      <div class="creator">@hackdad</div>
+      <div class="caption">Tension rod under the sink turns dead space into a spray-bottle organizer</div>
+      <div class="meta"><span class="folder">Life Hacks</span><span class="tag">#organization</span><span class="tag">#kitchen</span></div>
+      <div class="know"><b>Summary</b><span class="dot">·</span><b>How-to</b></div>
+    </div>
+  </div>
+  <div class="card">
+    <img src="mock-imgs/pilvillage.jpg" alt="">
+    <div class="body">
+      <div class="creator">@wanderlena</div>
+      <div class="caption">Albarracín, Spain: the pink hilltop village you've never heard of — go before everyone else does</div>
+      <div class="meta"><span class="folder">Travel</span><span class="tag">#spain</span><span class="tag">#hidden-gems</span></div>
+      <div class="know"><b>Summary</b><span class="dot">·</span><b>Key points</b><span class="dot">·</span>3 links</div>
+    </div>
+  </div>
+  <div class="card">
+    <img src="mock-imgs/pilfocaccia.jpg" alt="">
+    <div class="body">
+      <div class="creator">@bakewithmia</div>
+      <div class="caption">No-knead focaccia with rosemary sea salt — 5 minutes of actual work</div>
+      <div class="meta"><span class="folder">Recipes</span><span class="tag">#bread</span><span class="tag">#no-knead</span></div>
+      <div class="know"><b>Summary</b><span class="dot">·</span><b>Key points</b><span class="dot">·</span><b>How-to</b><span class="dot">·</span>1 link</div>
+    </div>
+  </div>
+  <div class="card">
+    <img src="mock-imgs/pilcache.jpg" alt="">
+    <div class="body">
+      <div class="creator">@aibuilderdaily</div>
+      <div class="caption">Prompt caching cut our API bill 68% — here's the exact setup that worked</div>
+      <div class="meta"><span class="folder">AI &amp; Tech</span><span class="tag">#cost</span><span class="tag">#llm</span><span class="tag">#caching</span></div>
+      <div class="know"><b>Summary</b><span class="dot">·</span><b>Key points</b><span class="dot">·</span><b>How-to</b></div>
+    </div>
+  </div>
+  <div class="card">
+    <img src="mock-imgs/pilbedroom.jpg" alt="">
+    <div class="body">
+      <div class="creator">@studiomoss</div>
+      <div class="caption">Small bedroom, big storage: platform bed with drawers beats a dresser every time</div>
+      <div class="meta"><span class="folder">Home Design</span><span class="tag">#small-spaces</span><span class="tag">#storage</span></div>
+      <div class="know"><b>Summary</b><span class="dot">·</span><b>Key points</b></div>
+    </div>
+  </div>
+  <div class="card">
+    <img src="mock-imgs/pilsoup.jpg" alt="">
+    <div class="body">
+      <div class="creator">@hackdad</div>
+      <div class="caption">Freeze soup portions flat in bags — they thaw in minutes and stack like files</div>
+      <div class="meta"><span class="folder">Life Hacks</span><span class="tag">#freezer</span><span class="tag">#meal-prep</span></div>
+      <div class="know"><b>Summary</b><span class="dot">·</span><b>How-to</b><span class="dot">·</span>1 link</div>
+    </div>
+  </div>
+</div>
+
+<div class="mocktag">Concept mockup — sample data</div>
+</body>
+</html>
