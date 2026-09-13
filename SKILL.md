@@ -47,6 +47,24 @@ from `PIL_CONFIG` env var, `./pil.config.json`, then `~/.config/pil/pil.config.j
 
 Requires: `python3`, `instagram-cli` (see the Instagram skill), `pip install "mcp<2"`.
 
+## First-run: setting up the user
+When the user asks you to set up PIL (e.g. pastes the prompt from the README):
+1. Clone the repo (or pull latest) and work from it. You can run `bootstrap.sh`
+   / `bootstrap.ps1` yourself for Python/git/deps, or do the Install steps manually.
+2. Link Instagram: `instagram-cli accounts` must list their account. If not, get
+   the connect URL (`instagram-cli connect-url`) and have the user link it in
+   their browser, then re-check. Never handle passwords or tokens yourself.
+3. Run the pipeline in order — every step is resume-safe: `ingest_saved.py` →
+   `extract_content.py` → `tag_all.py`. Extraction is slow on large libraries;
+   run it in the background and report when done.
+4. Build the app with `export_pwa.py`, then **deliver it**: zip the PWA folder,
+   put the zip in the user's file area, and attach it to your reply along with
+   the 3 install steps (unzip → double-click Start PIL → click Install).
+5. Offer the phone step: `publish_pwa.py` needs their hosting token — collect it
+   via the secure credential flow, never in chat. After publishing, make sure the
+   QR/URL reaches them (re-serve the folder or send the code directly).
+Keep the user posted at each stage; ask only for what only they can do.
+
 ## Auth
 The user links their own Instagram account themselves. `instagram-cli accounts`
 must list it; the `user_fbid` from that output goes into `pil.config.json` as
