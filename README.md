@@ -134,17 +134,22 @@ read-notes per post. No server, no network; it works straight from disk.
 Re-run `export_html.py` whenever you save new posts to refresh it. The file
 holds your data, so keep it on your own machine like anything personal.
 
-### Get the browser install prompt (PWA)
+### Get the browser install prompt (PWA) — one click
 
 Prefer the real *Install app* prompt over a manual shortcut? `export_pwa.py`
 builds a small installable bundle — `index.html`, `manifest.json`, an offline
-service worker, and icons — into `<data_dir>/pwa/`:
+service worker, icons, **and one-click launchers** — into `<data_dir>/pwa/`:
 
 ```bash
 python3 bin/export_pwa.py
-cd ~/.local/share/pil/pwa && python3 -m http.server 8080
-# open http://localhost:8080
 ```
+
+Then it's three steps, no terminal skills needed:
+
+1. Unzip the `pwa` folder anywhere.
+2. Double-click **Start PIL** (`Start PIL.command` on Mac, `Start PIL.bat` on
+   Windows) — it starts a tiny local server and opens your browser for you.
+3. Click **Install** in the browser's address bar (Chrome/Edge).
 
 `localhost` counts as a secure context in every browser, so installation and
 offline mode work with no HTTPS setup. What each browser does:

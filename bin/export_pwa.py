@@ -50,6 +50,47 @@ MANIFEST = {
     ],
 }
 
+# Double-click launchers: start the local server and open the browser.
+# No terminal skills needed: unzip -> double-click -> Install.
+START_COMMAND = """#!/bin/bash
+# PIL launcher (macOS / Linux) — just double-click this file.
+cd "$(dirname "$0")"
+PORT=8080
+if command -v lsof >/dev/null 2>&1; then
+  while lsof -i :$PORT >/dev/null 2>&1; do PORT=$((PORT+1)); done
+fi
+if ! command -v python3 >/dev/null 2>&1; then
+  echo "PIL needs Python 3: https://www.python.org/downloads/"
+  echo "Install it, then double-click this file again."
+  read -p "Press Enter to close."
+  exit 1
+fi
+echo "Starting your Personal Instagram Library on http://localhost:$PORT ..."
+echo "A browser window will open. Keep this window open while you use PIL;"
+echo "closing it stops the library."
+sleep 1
+(open "http://localhost:$PORT" 2>/dev/null || xdg-open "http://localhost:$PORT" 2>/dev/null || true) &
+exec python3 -m http.server "$PORT"
+"""
+
+START_BAT = """@echo off
+title PIL - Personal Instagram Library
+cd /d "%~dp0"
+where python >nul 2>nul
+if errorlevel 1 (
+  echo PIL needs Python 3: https://www.python.org/downloads/
+  echo Install it (tick "Add python.exe to PATH"), then double-click this file again.
+  pause
+  exit /b 1
+)
+echo Starting your Personal Instagram Library on http://localhost:8080 ...
+echo A browser window will open. Keep this window open while you use PIL;
+echo closing it stops the library.
+timeout /t 1 /nobreak >nul
+start "" "http://localhost:8080"
+python -m http.server 8080
+"""
+
 SW_JS = """const CACHE = "%s";
 const ASSETS = ["./", "./index.html", "./manifest.json",
                 "./icon-192.png", "./icon-512.png", "./icon-180.png"];
@@ -117,14 +158,18 @@ def main():
     write_png(os.path.join(out_dir, "icon-192.png"), 192)
     write_png(os.path.join(out_dir, "icon-512.png"), 512)
     write_png(os.path.join(out_dir, "icon-180.png"), 180)  # apple-touch-icon
+    cmd_path = os.path.join(out_dir, "Start PIL.command")
+    with open(cmd_path, "w", encoding="utf-8", newline="\n") as f:
+        f.write(START_COMMAND)
+    os.chmod(cmd_path, 0o755)
+    with open(os.path.join(out_dir, "Start PIL.bat"), "w", encoding="utf-8", newline="\r\n") as f:
+        f.write(START_BAT)
 
     files = sorted(os.listdir(out_dir))
     total = sum(os.path.getsize(os.path.join(out_dir, x)) for x in files)
     print(f"[done] {d['stats']['posts']} posts -> {out_dir}/ ({total / 1024 / 1024:.1f} MB)", flush=True)
-    print("Next:", flush=True)
-    print(f"  cd {out_dir} && python3 -m http.server 8080", flush=True)
-    print("  Open http://localhost:8080 — Chrome/Edge will offer Install;", flush=True)
-    print("  Safari: File -> Add to Dock (macOS) / Share -> Add to Home Screen (iOS).", flush=True)
+    print("One-click: unzip the folder and double-click 'Start PIL' "
+          "(.command on Mac, .bat on Windows).", flush=True)
 
 
 if __name__ == "__main__":
