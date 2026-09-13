@@ -125,18 +125,58 @@ body{background:#141414;color:#EDE8DB;font-family:-apple-system,"Segoe UI",Inter
 .empty{padding:80px 0;text-align:center;color:#6E695D;font-family:Georgia,serif;font-style:italic;font-size:20px}
 .footer-note{text-align:center;margin-top:70px;padding-top:26px;border-top:1px solid #242424;font-size:11px;letter-spacing:2.5px;color:#6E695D;text-transform:uppercase}
 @media(max-width:900px){.body{flex-direction:column}.side{width:100%}.grid{grid-template-columns:1fr}.masthead h1{font-size:44px}.wrap{padding:0 24px 60px}}
-.digest{border:1px solid #2B2B2B;padding:28px 30px;margin-bottom:26px;background:#161616}
-.digest .dlabel{font-family:ui-monospace,monospace;font-size:11px;letter-spacing:2.5px;color:#E0453A;text-transform:uppercase;margin-bottom:8px}
-.digest h3{font-family:Georgia,serif;font-weight:400;font-size:24px;margin:0 0 6px;color:#EDE8DB}
-.digest .dsub{color:#8A8578;font-size:13px;margin-bottom:16px;line-height:1.6}
-.digest ul{list-style:none;margin:0 0 4px;padding:0}
-.digest li{margin-bottom:10px;padding-left:18px;position:relative;font-size:14px;line-height:1.65;color:#C9C3B2}
-.digest li::before{content:"—";position:absolute;left:0;color:#E0453A}
-.digest li strong{color:#EDE8DB}
-.digest .src{display:block;font-family:ui-monospace,monospace;font-size:11px;color:#6E695D;margin-top:3px}
-.digest .src a{color:#A39D8D;text-decoration:none}
-.digest .src a:hover{color:#EDE8DB}
-.digest .dist{margin-top:16px;padding-top:14px;border-top:1px solid #242424;font-size:12px;line-height:1.9;color:#8A8578;font-family:ui-monospace,monospace}
+#answers{margin-bottom:26px}
+.grounding{display:flex;align-items:center;gap:10px;font-family:ui-monospace,monospace;font-size:12px;color:#8A8578;margin:0 0 16px}
+.grounding-dot{width:7px;height:7px;border-radius:50%;background:#E0453A;flex:0 0 auto}
+.knowledge-grid{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:20px;align-items:start}
+.answer-panel,.source-panel,.limited-panel{background:#161616;border:1px solid #2B2B2B;padding:28px 30px}
+.answer-kicker{font-family:ui-monospace,monospace;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:#E0453A;margin:0 0 10px}
+.answer-title{font-family:Georgia,serif;font-weight:400;font-size:clamp(24px,3vw,34px);line-height:1.15;color:#EDE8DB;margin:0 0 14px}
+.answer-lead{font-size:15px;line-height:1.7;color:#C9C3B2;margin:0 0 6px}
+.answer-section{border-top:1px solid #242424;padding-top:20px;margin-top:22px}
+.answer-section h3{font-family:Georgia,serif;font-weight:400;font-size:20px;color:#EDE8DB;margin:0 0 12px}
+.takeaways{list-style:none;margin:0;padding:0}
+.takeaways li{margin-bottom:10px;padding-left:18px;position:relative;font-size:14px;line-height:1.65;color:#C9C3B2}
+.takeaways li::before{content:"—";position:absolute;left:0;color:#E0453A}
+.takeaways strong{color:#EDE8DB}
+.citation{display:inline-flex;align-items:center;justify-content:center;vertical-align:.15em;min-width:22px;height:22px;padding:0 6px;margin-left:8px;background:none;border:1px solid #E0453A;border-radius:11px;color:#E0453A;font-family:ui-monospace,monospace;font-size:11px;cursor:pointer}
+.citation:hover{background:#E0453A;color:#141414}
+.source-panel{padding:22px}
+.source-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px}
+.source-head h3{font-family:Georgia,serif;font-weight:400;font-size:18px;color:#EDE8DB;margin:0}
+.source-count{font-family:ui-monospace,monospace;font-size:11px;color:#8A8578}
+.source-list{display:grid;gap:10px}
+.source-card{background:#1C1C1C;border:1px solid #2B2B2B;padding:14px 16px;text-align:left;font-family:inherit;cursor:pointer}
+.source-card:hover{border-color:#E0453A}
+.source-card-top{display:flex;justify-content:space-between;margin-bottom:8px}
+.source-number{font-family:ui-monospace,monospace;font-size:11px;color:#E0453A}
+.source-folder{font-family:ui-monospace,monospace;font-size:11px;color:#6E695D}
+.source-author{font-size:13px;color:#EDE8DB;margin-bottom:6px}
+.source-excerpt{font-size:13px;line-height:1.6;color:#8A8578;margin:0 0 8px}
+.source-links{display:flex;gap:12px;align-items:center}
+.source-links .ig{font-size:12px;color:#A39D8D;text-decoration:none}
+.source-links .ig:hover{color:#EDE8DB}
+.source-links .linknote{font-size:11px;color:#6E695D;font-family:ui-monospace,monospace}
+.limited-panel p{font-size:14px;line-height:1.65;color:#C9C3B2}
+.limited-panel .why-match{font-size:12px;color:#6E695D;font-family:ui-monospace,monospace;margin-top:14px}
+.excerpt-card{border-top:1px solid #242424;padding:14px 0}
+.excerpt-card h4{font-size:14px;color:#EDE8DB;margin:0 0 6px;font-weight:600}
+.excerpt-card p{font-size:13px;line-height:1.65;color:#8A8578;margin:0}
+.followups{display:flex;flex-wrap:wrap;gap:8px}
+.followup{background:none;border:1px solid #2B2B2B;color:#A39D8D;font-family:ui-monospace,monospace;font-size:11px;letter-spacing:1px;padding:10px 16px;cursor:pointer}
+.followup:hover{border-color:#E0453A;color:#EDE8DB}
+.approach-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.approach{background:#1C1C1C;border:1px solid #2B2B2B;padding:16px 18px}
+.approach strong{font-size:13px;color:#EDE8DB}
+.approach p{font-size:13px;line-height:1.6;color:#8A8578;margin:8px 0 0}
+.card.flash{outline:2px solid #E0453A;outline-offset:4px}
+#phonepanel{border:1px solid #2B2B2B;background:#161616;padding:24px 28px;margin-bottom:26px;display:none;align-items:center;gap:24px}
+#phonepanel.show{display:flex}
+#phonepanel img{width:120px;height:120px;flex:0 0 auto;background:#fff;padding:6px}
+#phonepanel h3{font-family:Georgia,serif;font-weight:400;font-size:20px;color:#EDE8DB;margin:0 0 8px}
+#phonepanel p{font-size:13px;line-height:1.65;color:#8A8578;margin:0 0 6px}
+#phonepanel a{color:#EDE8DB}
+@media(max-width:900px){.knowledge-grid{grid-template-columns:1fr}.approach-grid{grid-template-columns:1fr}#phonepanel{flex-direction:column;align-items:flex-start}}
 </style>
 </head>
 <body>
@@ -167,6 +207,15 @@ body{background:#141414;color:#EDE8DB;font-family:-apple-system,"Segoe UI",Inter
     </div>
   </div>
 
+  <div id="phonepanel">
+    <img id="phoneqr" alt="QR code to install PIL on your phone">
+    <div>
+      <h3>Take PIL on your phone</h3>
+      <p>Scan the code with your phone's camera, or open this link on your phone:<br><a id="phonelink" href="#"></a></p>
+      <p>Android: open in Chrome → Install app &nbsp;·&nbsp; iPhone: open in Safari → Share → Add to Home Screen. After the first load it works offline.</p>
+    </div>
+  </div>
+
   <div class="searchbar">
     <input id="q" type="text" placeholder="Search PIL…" autocomplete="off">
     <span class="kbd">/</span>
@@ -187,7 +236,7 @@ body{background:#141414;color:#EDE8DB;font-family:-apple-system,"Segoe UI",Inter
           <select id="sort"><option value="new">Recently saved</option><option value="old">Oldest saved</option></select>
         </div>
       </div>
-      <div id="digest" style="display:none"></div>
+      <div id="answers" style="display:none"></div>
       <div id="featured"></div>
       <div class="grid" id="grid"></div>
       <div class="empty" id="empty" style="display:none">Nothing in the library matches — try another search.</div>
@@ -216,20 +265,200 @@ const md = s => {
 const inlineMd = s => esc(s).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
 const state = { q:'', room:null, tag:null, sort:'new', shown:__PAGE__ };
 const folderName = id => (PIL.folders.find(f=>f.id===id)||{}).name || id;
+PIL.posts.forEach((p,i)=>{
+  p._index=i;
+  const deep=[p.summary,(p.key_points||[]).join(' '),p.howto].filter(Boolean).join(' ');
+  p._knowledgeText=deep.toLowerCase();
+  p._text=[p.author,p.snippet,(p.tags||[]).join(' '),p.folders.map(folderName).join(' '),deep].join(' ').toLowerCase();
+  p.has_knowledge=!!(p.summary||(p.key_points&&p.key_points.length)||p.howto);
+});
 
+const fmt = n => Number(n||0).toLocaleString();
+function el(tag, cls, text){ const node=document.createElement(tag); if(cls) node.className=cls; if(text!==undefined) node.textContent=text; return node; }
+function clean(v){
+  return String(v||'')
+    .replace(/^#{1,6}\s*/gm,'')
+    .replace(/\*\*/g,'')
+    .replace(/\bSocial Context\s*&\s*Synthesis\b/gi,'Context')
+    .replace(/\bCultural Context\b/gi,'Context')
+    .replace(/\bCultural Moment\b/gi,'Moment')
+    .replace(/\bCultural Significance\b/gi,'Significance')
+    .replace(/\bCultural Origin\b/gi,'Origin')
+    .trim();
+}
+function shorten(v, max){ max=max||240; const t=clean(v).replace(/\s+/g,' '); return t.length>max ? t.slice(0,max-1).trim()+'…' : t; }
+const GENERIC_TAGS = new Set(['video','carousel','image','they','here','most','every','time','know','full','want','need','send','part']);
+function scorePost(p, terms){
+  if(!terms.length) return 0;
+  let score=0;
+  const author=(p.author||'').toLowerCase(), snippet=(p.snippet||'').toLowerCase(),
+        tags=(p.tags||[]).map(t=>String(t).toLowerCase()), phrase=terms.join(' ');
+  for(const term of terms){
+    if(!p._text.includes(term)) return -1;
+    if(author.includes(term)) score+=5;
+    if(tags.some(t=>t===term)) score+=7;
+    if(tags.some(t=>t.includes(term))) score+=3;
+    if(snippet.includes(term)) score+=3;
+    if(p._knowledgeText.includes(term)) score+=4;
+  }
+  if(phrase.length>2){
+    if(snippet.includes(phrase)) score+=10;
+    if(p._knowledgeText.includes(phrase)) score+=12;
+    if(tags.includes(phrase)) score+=12;
+  }
+  if(p.has_knowledge) score+=1;
+  return score;
+}
+function sourceNumber(post, sources){ return Math.max(0, sources.findIndex(p=>p.id===post.id))+1; }
+function jumpToSource(post){
+  const t=document.getElementById('card-'+post.id);
+  if(!t) return;
+  t.scrollIntoView({behavior:'smooth', block:'center'});
+  t.classList.add('flash');
+  window.setTimeout(()=>t.classList.remove('flash'), 1400);
+}
+function citation(post, sources){
+  const num=sourceNumber(post, sources), b=el('button','citation',String(num));
+  b.type='button'; b.setAttribute('aria-label','View source '+num);
+  b.addEventListener('click',()=>jumpToSource(post));
+  return b;
+}
+function sourceExcerpt(p){ return shorten(p.summary||p.snippet||'Open the post to review the saved source.', 220); }
+function folderBreakdown(sources){
+  const counts=new Map();
+  sources.forEach(p=>(p.folders||[]).forEach(f=>{ const n=folderName(f); counts.set(n,(counts.get(n)||0)+1); }));
+  return [...counts.entries()].sort((a,b)=>b[1]-a[1]).slice(0,3).map(([n,c])=>n+' ('+c+')').join(', ');
+}
+function makeSourceCard(post, sources){
+  const wrap=el('div','source-card'); wrap.id='source-'+sourceNumber(post, sources);
+  const top=el('div','source-card-top');
+  top.append(el('span','source-number',String(sourceNumber(post, sources))), el('span','source-folder', post.folders.length?folderName(post.folders[0]):'Saved'));
+  wrap.append(top, el('div','source-author', post.author?'@'+post.author:'Saved post'), el('p','source-excerpt', sourceExcerpt(post)));
+  const lrow=el('div','source-links');
+  if(post.url){ const a=document.createElement('a'); a.href=post.url; a.target='_blank'; a.rel='noopener'; a.className='ig'; a.textContent='Instagram ↗'; lrow.append(a); }
+  if(post.links&&post.links.length) lrow.append(el('span','linknote', post.links.length+' link'+(post.links.length>1?'s':'')+' discussed'));
+  if(lrow.childNodes.length) wrap.append(lrow);
+  wrap.addEventListener('click', e=>{ if(e.target.tagName!=='A') jumpToSource(post); });
+  return wrap;
+}
+function sourcePanel(sources){
+  const panel=el('aside','source-panel'); panel.setAttribute('aria-label','Sources used in this answer');
+  const head=el('div','source-head'); head.append(el('h3','','Sources'), el('span','source-count',String(sources.length))); panel.append(head);
+  const list=el('div','source-list'); sources.forEach(p=>list.append(makeSourceCard(p, sources))); panel.append(list);
+  return panel;
+}
+function collectInsights(sources){
+  const seen=new Set();
+  const meta=/^(?:inferred role|content type|post type|format|topic|author type|creator role|media type|cultural|community|author|key quote|stated purpose|data of event|details|media pivots)(?:\s*(?:&|and)\s*[^:]*)?\s*:?\s*$/i;
+  const metaLine=/^(?:inferred role|content type|post type|format|topic|author(?: type|\s*&\s*community breakdown)?|creator role|media type|community discussion(?: and discourse)?|key quote(?: from caption)?|stated purpose|data of event|details|media pivots)\s*:/i;
+  const buckets=sources.map(post=>{
+    let cands=(post.key_points||[]).slice();
+    if(!cands.length && post.summary) cands=[post.summary];
+    return cands.map(raw=>shorten(raw,280)).filter(text=>{
+      const key=text.toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
+      if(text.length<28 || /^#{1,3}/.test(text) || meta.test(text) || metaLine.test(text) || /^[^:]{2,50}:\s*$/.test(text) || seen.has(key)) return false;
+      seen.add(key); return true;
+    }).map(text=>({text, post}));
+  });
+  const out=[];
+  for(let round=0; out.length<6 && round<12; round++)
+    buckets.forEach(items=>{ if(items[round] && out.length<6) out.push(items[round]); });
+  return out;
+}
+function relatedThemes(sources){
+  const terms=new Set(state.q.toLowerCase().split(/\s+/).filter(Boolean)), counts=new Map(), first=new Map();
+  sources.forEach(p=>(p.tags||[]).forEach(tag=>{
+    const t=String(tag).toLowerCase();
+    if(GENERIC_TAGS.has(t)||terms.has(t)||t.length<3) return;
+    counts.set(t,(counts.get(t)||0)+1); if(!first.has(t)) first.set(t,p);
+  }));
+  return [...counts.entries()].sort((a,b)=>b[1]-a[1]).slice(0,4).map(([tag,count])=>({tag, count, post:first.get(tag)}));
+}
+function followups(sources){
+  const wrap=el('div','followups');
+  relatedThemes(sources).slice(0,3).forEach(({tag})=>{
+    const b=el('button','followup','Explore '+tag); b.type='button';
+    b.addEventListener('click',()=>{ document.getElementById('q').value=tag; state.q=tag; state.room=null; state.tag=null; renderRooms(); renderTags(); render(false); });
+    wrap.append(b);
+  });
+  return wrap;
+}
+function buildKnowledgeView(matches){
+  const host=document.getElementById('answers');
+  host.replaceChildren();
+  if(!state.q){ host.style.display='none'; return 0; }
+  host.style.display='block';
+  const deep=matches.filter(p=>p.has_knowledge), sources=deep.slice(0,8), folders=folderBreakdown(sources);
+  const grounding=el('p','grounding'); grounding.append(el('span','grounding-dot'));
+  if(sources.length) grounding.append(document.createTextNode('Built from '+sources.length+' deep-read '+(sources.length===1?'post':'posts')+(folders?' · '+folders:'')+(matches.length>sources.length?' · '+fmt(matches.length-sources.length)+' more matches':'')));
+  else grounding.append(document.createTextNode(fmt(matches.length)+' catalog '+(matches.length===1?'match':'matches')+' · no deep-read content for this search'));
+  host.append(grounding);
+  if(!sources.length){
+    const panel=el('section','limited-panel');
+    panel.append(el('p','answer-kicker','Thin result'), el('h3','answer-title', matches.length?'No extracted knowledge yet':'Nothing in PIL covers this yet.'));
+    panel.append(el('p','', matches.length?'Your saved posts match the words you searched, but none has a deeper extraction to support a knowledge answer. The matching posts are shown below.':'Try a broader search or remove a filter. The page won\u2019t fill gaps with outside knowledge.'));
+    if(matches.length) panel.append(el('p','why-match','Why these posts: the terms appear in a creator name, caption, tag, folder, or extracted note.'));
+    host.append(panel); return 0;
+  }
+  const grid=el('div','knowledge-grid');
+  if(sources.length<3){
+    const panel=el('section','limited-panel');
+    panel.append(el('p','answer-kicker','Limited coverage'), el('h3','answer-title','Based on '+sources.length+' deep-read '+(sources.length===1?'post':'posts')), el('p','', 'There isn\u2019t enough coverage for a blended answer, so the source material stays attributed.'));
+    sources.forEach(post=>{ const card=el('article','excerpt-card'); const h=el('h4','', post.author?'@'+post.author:'Saved post'); h.append(citation(post,sources)); card.append(h, el('p','',sourceExcerpt(post))); panel.append(card); });
+    panel.append(el('p','why-match','Why these posts: your search terms appear in their captions, tags, folders, or extracted notes.'), followups(sources));
+    grid.append(panel, sourcePanel(sources)); host.append(grid); return sources.length;
+  }
+  const answer=el('article','answer-panel');
+  answer.append(el('p','answer-kicker','Answer from PIL'), el('h3','answer-title','What your saved posts say about \u201c'+state.q+'\u201d'));
+  const lead=el('p','answer-lead');
+  const themes=relatedThemes(sources), creators=new Set(sources.map(p=>p.author).filter(Boolean));
+  lead.append(document.createTextNode('These '+sources.length+' deep-read matches come from '+creators.size+' '+(creators.size===1?'creator':'creators')+'. '));
+  if(themes.length){
+    lead.append(document.createTextNode('The most repeated tags are '));
+    themes.slice(0,3).forEach((item,i)=>{ if(i) lead.append(document.createTextNode(i===Math.min(2,themes.length-1)?' and ':', ')); lead.append(document.createTextNode(item.tag), citation(item.post,sources)); });
+    lead.append(document.createTextNode('. '));
+  }
+  lead.append(document.createTextNode('Open any citation to inspect the supporting post.'));
+  answer.append(lead);
+  const insights=collectInsights(sources);
+  if(insights.length){
+    const section=el('section','answer-section'); section.append(el('h3','','Key takeaways'));
+    const list=el('ul','takeaways');
+    insights.forEach(item=>{ const li=el('li',''); li.innerHTML=inlineMd(item.text); li.append(citation(item.post,sources)); list.append(li); });
+    section.append(list); answer.append(section);
+  }
+  const howTo=/\b(how|make|build|recipe|steps?|setup|install|create)\b/i.test(state.q);
+  const approaches=sources.filter(p=>clean(p.howto).length>35).slice(0,4);
+  if(howTo && approaches.length>1){
+    const section=el('section','answer-section'); section.append(el('h3','','Distinct approaches in your posts'));
+    const list=el('div','approach-grid');
+    approaches.forEach(post=>{ const box=el('article','approach'); const h=el('strong','', post.author?'@'+post.author:'Saved post'); h.append(citation(post,sources)); box.append(h, el('p','',shorten(post.howto,260))); list.append(box); });
+    section.append(list); answer.append(section);
+  }
+  const f=followups(sources);
+  if(f.childNodes.length){ const section=el('section','answer-section'); section.append(el('h3','','Keep exploring'), f); answer.append(section); }
+  grid.append(answer, sourcePanel(sources)); host.append(grid);
+  return sources.length;
+}
 function matches(p){
   if(state.room && !p.folders.includes(state.room)) return false;
   if(state.tag && !p.tags.includes(state.tag)) return false;
-  if(state.q){
-    const hay = [p.summary,p.snippet,p.author,(p.key_points||[]).join(' '),p.tags.join(' ')].join(' ').toLowerCase();
-    if(!hay.includes(state.q.toLowerCase())) return false;
-  }
   return true;
 }
 function filtered(){
-  let r = PIL.posts.filter(matches);
-  r.sort((a,b)=> state.sort==='new' ? (b.saved_at||'').localeCompare(a.saved_at||'') : (a.saved_at||'').localeCompare(b.saved_at||''));
-  return r;
+  const terms=state.q.toLowerCase().trim().split(/\s+/).filter(Boolean);
+  let scored=[];
+  for(const p of PIL.posts){
+    if(!matches(p)) continue;
+    const s=scorePost(p, terms);
+    if(s<0) continue;
+    scored.push({p, s});
+  }
+  scored.sort((a,b)=>{
+    if(terms.length && b.s!==a.s) return b.s-a.s;
+    return state.sort==='new' ? (b.p.saved_at||'').localeCompare(a.p.saved_at||'') : (a.p.saved_at||'').localeCompare(b.p.saved_at||'');
+  });
+  return scored.map(x=>x.p);
 }
 function cardHTML(p, i, featured){
   const color = PALETTE[i % PALETTE.length];
@@ -243,7 +472,7 @@ function cardHTML(p, i, featured){
     + (p.key_points&&p.key_points.length ? '<div class="sec"><span class="mono">Key points</span><ul>'+kps+'</ul></div>':'')
     + (p.howto ? '<div class="sec"><span class="mono">How-to</span>'+md(p.howto)+'</div>':'')
     + (links ? '<div class="sec"><span class="mono">Links discussed</span><ul>'+links+'</ul></div>':'');
-  return '<div class="card'+(featured?' featured':'')+'">'
+  return '<div class="card'+(featured?' featured':'')+'" id="card-'+p.id+'">'
     + '<div class="panel" style="background:'+color+'"><div class="prow"><span class="mono">'+esc(room)+'</span><span class="pnum">'+String(i+1).padStart(4,'0')+'</span></div><h3>'+headline+'</h3></div>'
     + '<div class="meta"><div class="kind mono">'+esc(p.media_type||'post')+'</div><div class="who">'+esc(p.author?'@'+p.author:'')+'</div>'
     + '<div class="rooms">'+p.folders.map(f=>esc(folderName(f))).join(' · ')+'</div>'
@@ -251,50 +480,9 @@ function cardHTML(p, i, featured){
     + (notes ? '<div class="notes" id="notes-'+p.id+'"><h4>Read notes</h4>'+notes+'</div>' : '')
     + '</div><span class="rdot"></span></div>';
 }
-function renderDigest(list){
-  const el = document.getElementById('digest');
-  const active = state.q || state.room || state.tag;
-  if(!active || !list.length){ el.style.display='none'; el.innerHTML=''; return; }
-  el.style.display='block';
-  const cap = list.slice(0, 200);
-  const seen = new Map();
-  cap.forEach(p=>{
-    (p.key_points||[]).forEach(k=>{
-      const norm = String(k).toLowerCase().replace(/[^a-z0-9\s]/g,'').replace(/\s+/g,' ').trim();
-      if(norm.length < 12) return;
-      if(!seen.has(norm)) seen.set(norm, {text:k, n:0, posts:[]});
-      const e = seen.get(norm);
-      e.n++;
-      if(e.posts.length < 4) e.posts.push(p);
-    });
-  });
-  const top = [...seen.values()].sort((a,b)=>b.n-a.n).slice(0,8);
-  const rooms = {}, tags = {};
-  cap.forEach(p=>{
-    (p.folders||[]).forEach(f=>{rooms[f]=(rooms[f]||0)+1;});
-    (p.tags||[]).forEach(t=>{tags[t]=(tags[t]||0)+1;});
-  });
-  const topRooms = Object.entries(rooms).sort((a,b)=>b[1]-a[1]).slice(0,4).map(([f,n])=>esc(folderName(f))+' · '+n);
-  const topTags = Object.entries(tags).sort((a,b)=>b[1]-a[1]).slice(0,6).map(([t,n])=>'#'+esc(t));
-  let h = '<div class="dlabel mono">Digest</div><h3>What your library says'+(state.q?' about \u201c'+esc(state.q)+'\u201d':'')+'</h3>'
-    + '<div class="dsub">Extracted from '+list.length.toLocaleString()+' matching post'+(list.length===1?'':'s')+' \u2014 the key points your saved posts agree on, with sources.</div>';
-  if(top.length){
-    h += '<ul>'+top.map(e=>{
-      const src = e.posts.map(p=>'<a href="'+esc(p.url)+'" target="_blank" rel="noopener">@'+esc(p.author||'post')+'</a>').join(' \u00b7 ');
-      return '<li>'+inlineMd(e.text)+'<span class="src">'+e.n+' post'+(e.n===1?'':'s')+': '+src+(e.n>e.posts.length?' +'+(e.n-e.posts.length)+' more':'')+'</span></li>';
-    }).join('')+'</ul>';
-  } else {
-    h += '<div class="dsub">No extracted key points for these posts yet \u2014 expand individual notes below.</div>';
-  }
-  const dist = [];
-  if(topRooms.length) dist.push('Rooms \u2014 '+topRooms.join(' &nbsp;\u00b7&nbsp; '));
-  if(topTags.length) dist.push('Tags \u2014 '+topTags.join(' '));
-  if(dist.length) h += '<div class="dist">'+dist.join('<br>')+'</div>';
-  el.innerHTML = h;
-}
 function render(append){
   const list = filtered();
-  if(!append) renderDigest(list);
+  if(!append) buildKnowledgeView(list);
   const feat = document.getElementById('featured'), grid = document.getElementById('grid');
   if(!append){ feat.innerHTML=''; grid.innerHTML=''; state.shown=0; }
   const slice = list.slice(state.shown, state.shown + __PAGE__);
@@ -331,6 +519,16 @@ document.addEventListener('keydown', e=>{ if(e.key==='/' && document.activeEleme
 document.getElementById('sort').addEventListener('change', e=>{state.sort=e.target.value; render(false);});
 document.getElementById('more').addEventListener('click', ()=>render(true));
 renderRooms(); renderTags(); render(false);
+fetch('./phone.json').then(r=>r.ok?r.json():null).then(d=>{
+  if(!d||!d.url) return;
+  const panel=document.getElementById('phonepanel');
+  document.getElementById('phonelink').href=d.url;
+  document.getElementById('phonelink').textContent=d.url;
+  const qr=document.getElementById('phoneqr');
+  qr.src='./phone-qr.png';
+  qr.onerror=()=>{qr.style.display='none';};
+  panel.classList.add('show');
+}).catch(()=>{});
 </script>
 __PWA_SW__
 </body>

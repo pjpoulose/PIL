@@ -26,8 +26,10 @@ from `PIL_CONFIG` env var, `./pil.config.json`, then `~/.config/pil/pil.config.j
 - `bin/export_web.py [output_path]` — step 4: static JSON export for manual use
   with any AI tool. Captions are truncated to snippets, never verbatim.
 - `bin/export_html.py [output_path]` — step 5: self-contained HTML dashboard
-  (`pil_library.html`): search, rooms, tags, sorting, read-notes. Works offline
-  from disk; the user can keep it on their Desktop as a web app.
+  (`pil_library.html`): answer-first search with inline citations, source
+  cards, thin-result fallbacks and follow-up prompts, plus rooms, tags,
+  sorting, read-notes. Works offline from disk; the user can keep it on
+  their Desktop as a web app.
 - `bin/export_pwa.py [output_dir]` — step 6: installable PWA bundle
   (`index.html` + `manifest.json` + offline service worker + icons) for the
   real browser *Install* prompt, plus one-click launchers: a Mac
@@ -35,6 +37,11 @@ from `PIL_CONFIG` env var, `./pil.config.json`, then `~/.config/pil/pil.config.j
   `Start/Stop PIL.vbs`, and a universal `Start PIL.command`. Serve over
   localhost; Chrome/Edge prompt automatically, Safari/Firefox add manually
   (see README).
+- `bin/publish_pwa.py <pwa_dir> [--provider netlify|manual]` — step 7:
+  publish the PWA bundle to the user's own private static host for phone
+  install; writes `phone.json` + `phone-qr.png` so the desktop PWA shows a
+  "Take PIL on your phone" panel with a QR code. Tokens live in the local
+  config's `publish` section, never committed. See `MOBILE.md`.
 - `bin/mcp_server.py` — read-only MCP server over stdio. Tools: `search_posts`,
   `get_post`, `list_folders`, `list_tags`, `library_stats`.
 

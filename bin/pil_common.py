@@ -39,6 +39,7 @@ def load_config():
         "account_id": cfg.get("account_id") or os.environ.get("PIL_ACCOUNT_ID"),
         "data_dir": data_dir,
         "db_path": os.path.join(data_dir, "pil.sqlite"),
+        "config": cfg,  # full raw config (e.g. "publish" section); never logged
     }
 
 

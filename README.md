@@ -170,6 +170,18 @@ offline mode work with no HTTPS setup. What each browser does:
 The single-file `pil_library.html` above keeps working as before for anyone
 who'd rather just double-click a file — no server needed.
 
+### 📱 Take it on your phone
+
+Phones can't reach the desktop launcher — they need the PWA on `https`. One
+command publishes the bundle to hosting you control, then your phone installs
+it like a native app (Android: Chrome → Install app · iPhone: Safari → Share
+→ Add to Home Screen). Fully offline after the first load. See
+[MOBILE.md](MOBILE.md):
+
+```bash
+python3 bin/publish_pwa.py <data_dir>/pwa --provider netlify
+```
+
 ## 📦 What's inside
 
 ```
@@ -188,6 +200,7 @@ pil/
 │   ├── export_web.py        # step 4: static export
 │   ├── export_html.py       # step 5: self-contained HTML dashboard
 │   ├── export_pwa.py        # step 6: installable PWA bundle (manifest + SW + icons)
+│   ├── publish_pwa.py       # step 7: publish PWA to your own host for phone install
 │   └── mcp_server.py        # read-only MCP server (stdio)
 └── references/
     └── mcp_clients.md       # Cursor / Claude Code / Claude Desktop wiring
