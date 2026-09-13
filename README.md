@@ -123,10 +123,19 @@ only processes posts it hasn't seen yet.
 | Use it inside your AI tools | Screenshots and retyping | MCP server or JSON export |
 | Where your data lives | Meta's servers | Your machine, SQLite |
 
-## 🔍 Query it live (MCP)
+## 🤖 Ask your library from other AI tools
 
-Wire it into your client — see [references/mcp_clients.md](references/mcp_clients.md)
-for Claude Code, Claude Desktop, and Cursor configs. Available tools:
+**Live (recommended): MCP.** Point any MCP-compatible assistant at the
+read-only server and every question reads your current database — always
+up to date, no exports, no re-uploads:
+
+```bash
+python3 /path/to/pil/bin/mcp_server.py    # stdio; Ctrl-C to stop
+```
+
+Wiring for Claude Code, Claude Desktop, and Cursor:
+[references/mcp_clients.md](references/mcp_clients.md). Any MCP-compatible
+client works. Available tools:
 
 | Tool | What it does |
 |---|---|
@@ -140,34 +149,14 @@ The server opens the database with SQLite `mode=ro` and exposes SELECT-only
 tools — it cannot modify your library. (Attack-tested: SQL injection, write
 attempts, and limit abuse all verified blocked.)
 
-## 📄 Query it manually (static export)
+**Snapshot: file upload.** Ask your Muse to send you the `web_data.json` file
+(built with `export_web.py`): every post with its deep-read knowledge in one
+file. Attach it to any AI chat (Claude, ChatGPT, …) and ask questions like any
+document. It's frozen at export time — a snapshot, not a live connection — so
+ask your Muse for a fresh copy after you save new posts.
 
-`export_web.py` writes `<data_dir>/web_data.json`: every post with a
-280-character caption snippet plus deep-read knowledge where available. Upload
-that file into any AI chat tool to ask questions over your library.
-
-## 🤖 Use your library with other AI tools
-
-Your library isn't locked to the app — point any AI tool at it:
-
-**Any AI chat (Claude, ChatGPT, …)** — ask your Muse to send you the
-`web_data.json` file (it builds it with `export_web.py`): every post with its
-deep-read knowledge in one file. Attach that file to any AI chat and ask
-questions over it like any document. It's a snapshot — ask your Muse for a
-fresh copy after you save new posts. (File uploads are always snapshots — no
-attached file can update itself inside another AI's chat. If you want answers
-that are always current, use the MCP server option below: it reads the live
-database on every question.)
-
-**Coding assistants (Claude Code, Cursor, …)** — connect the read-only MCP
-server (`bin/mcp_server.py` over stdio) and they can search posts, read
-summaries, and pull how-tos live. See
-[references/mcp_clients.md](references/mcp_clients.md) for wiring; any
-MCP-compatible client works.
-
-**Directly (advanced)** — the database is plain SQLite at
-`<data_dir>/pil.sqlite` (schema in `schema.sql`). Open it read-only with any
-SQLite tool.
+**Directly (advanced).** The database is plain SQLite at `<data_dir>/pil.sqlite`
+(schema in `schema.sql`). Open it read-only with any SQLite tool.
 
 These files hold your personal Instagram data — keep them on your own machine
 and only share them with tools you trust.
