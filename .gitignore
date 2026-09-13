@@ -1,0 +1,10 @@
+# PIL: code is shared, data stays home. Never commit user data.
+*.sqlite
+*.sqlite-*
+pil.sqlite
+web_data.json
+pil.config.json
+.cursors/
+.understanding_done
+__pycache__/
+*.pyc
