@@ -8,9 +8,8 @@ takes it from there.
 
 Usage:
     python3 export_pwa.py [output_dir]   # defaults to <data_dir>/pwa
-    cd <output_dir> && python3 -m http.server 8080
-    # open http://localhost:8080 -> install prompt (Chrome/Edge);
-    # Safari/Firefox: add to Dock / Home Screen from the browser menu.
+    # then double-click the launcher for your OS (see README) - it serves
+    # the folder and opens http://127.0.0.1:8080 for you.
 
 Cross-browser notes:
   - Chrome/Edge (desktop & Android): automatic install prompt once served.
@@ -65,12 +64,12 @@ if ! command -v python3 >/dev/null 2>&1; then
   read -p "Press Enter to close."
   exit 1
 fi
-echo "Starting your Personal Instagram Library on http://localhost:$PORT ..."
+echo "Starting your Personal Instagram Library on http://127.0.0.1:$PORT ..."
 echo "A browser window will open. Keep this window open while you use PIL;"
 echo "closing it stops the library."
 sleep 1
-(open "http://localhost:$PORT" 2>/dev/null || xdg-open "http://localhost:$PORT" 2>/dev/null || true) &
-exec python3 -m http.server "$PORT"
+(open "http://127.0.0.1:$PORT" 2>/dev/null || xdg-open "http://127.0.0.1:$PORT" 2>/dev/null || true) &
+exec python3 -c "from http.server import ThreadingHTTPServer as S, SimpleHTTPRequestHandler as H; S(('127.0.0.1', $PORT), H).serve_forever()"
 """
 
 START_BAT = """@echo off
@@ -83,12 +82,12 @@ if errorlevel 1 (
   pause
   exit /b 1
 )
-echo Starting your Personal Instagram Library on http://localhost:8080 ...
+echo Starting your Personal Instagram Library on http://127.0.0.1:8080 ...
 echo A browser window will open. Keep this window open while you use PIL;
 echo closing it stops the library.
 timeout /t 1 /nobreak >nul
-start "" "http://localhost:8080"
-python -m http.server 8080
+start "" "http://127.0.0.1:8080"
+python -c "from http.server import ThreadingHTTPServer as S, SimpleHTTPRequestHandler as H; S(('127.0.0.1', 8080), H).serve_forever()"
 """
 
 SW_JS = """const CACHE = "%s";
@@ -188,12 +187,12 @@ on run
 		"    except OSError:" & return & ¬
 		"        port += 1" & return & ¬
 		"log = open(os.path.join(pwa, 'pil-server.log'), 'a')" & return & ¬
-		"subprocess.Popen([sys.executable, '-m', 'http.server', str(port)], cwd=pwa, stdout=log, stderr=subprocess.STDOUT, start_new_session=True)" & return & ¬
+		"subprocess.Popen([sys.executable, '-c', 'from http.server import ThreadingHTTPServer as S, SimpleHTTPRequestHandler as H; S(('127.0.0.1', %d), H).serve_forever()' % port], cwd=pwa, stdout=log, stderr=subprocess.STDOUT, start_new_session=True)" & return & ¬
 		"open(os.path.join(pwa, 'pil-server.port'), 'w').write(str(port))" & return & ¬
 		"print('OPEN %d' % port)" & return
 	set resultLine to do shell script "python3 - " & quoted form of pwaDir & " <<'PYEOF'" & return & pyScript & return & "PYEOF"
 	set thePort to text 6 thru -1 of resultLine
-	open location "http://localhost:" & thePort
+	open location "http://127.0.0.1:" & thePort
 end run
 """
 
@@ -283,7 +282,7 @@ Dim p
 For p = 8080 To 8090
   If PilOnPort(p) Then
     Log "already running on " & p
-    sh.Run "http://localhost:" & p, 1, False
+    sh.Run "http://127.0.0.1:" & p, 1, False
     WScript.Quit
   End If
 Next
@@ -319,13 +318,16 @@ If Left(ver, 8) <> "Python 3" Then
 End If
 
 ' Start the server on the first free port and wait until it answers.
-Dim started, proc, tried
+' Threaded server bound to 127.0.0.1: the browser opens the exact address
+' that was verified, so localhost/IPv6/proxy quirks can't get in the way.
+Dim started, proc, tried, srvCmd
 started = False : tried = ""
 For Each p In Array(8080, 8081, 8082)
   tried = tried & p & " "
   Log "trying port " & p
+  srvCmd = "python -c " & Chr(34) & "from http.server import ThreadingHTTPServer as S, SimpleHTTPRequestHandler as H; S(('127.0.0.1'," & p & "),H).serve_forever()" & Chr(34)
   On Error Resume Next
-  Set proc = sh.Exec("python -m http.server " & p)
+  Set proc = sh.Exec(srvCmd)
   If Err.Number <> 0 Then
     Log "Exec failed: " & Err.Description
     On Error GoTo 0
@@ -333,8 +335,8 @@ For Each p In Array(8080, 8081, 8082)
     On Error GoTo 0
     If WaitForPil(p) Then
       fso.CreateTextFile(pidFile, True).Write proc.ProcessID & ":" & p
-      Log "serving on " & p & " (pid " & proc.ProcessID & ")"
-      sh.Run "http://localhost:" & p, 1, False
+      Log "serving on 127.0.0.1:" & p & " (pid " & proc.ProcessID & ")"
+      sh.Run "http://127.0.0.1:" & p, 1, False
       started = True
       Exit For
     Else
