@@ -228,15 +228,25 @@ read -p "Press Enter to close."
 """
 
 # Windows: hidden-console launchers. Start finds/starts the server (no console
-# window), Stop kills it via the PID file.
+# window), Stop kills it via the PID file. Start diagnoses the common failure
+# modes (ran from inside the zip, Store stub instead of real Python) itself.
 START_VBS = """' Start PIL (Windows) - double-click to launch. No console window.
 Option Explicit
-Dim fso, sh, pwaDir, pidFile, port, proc, started, p
+Dim fso, sh, pwaDir, pidFile, logFile
 Set fso = CreateObject("Scripting.FileSystemObject")
 Set sh = CreateObject("WScript.Shell")
 pwaDir = fso.GetParentFolderName(WScript.ScriptFullName)
 sh.CurrentDirectory = pwaDir
 pidFile = fso.BuildPath(pwaDir, "pil-server.pid")
+logFile = fso.BuildPath(pwaDir, "pil-launcher.log")
+
+Sub Log(msg)
+  On Error Resume Next
+  Dim t : Set t = fso.OpenTextFile(logFile, 8, True)
+  t.WriteLine Now & "  " & msg
+  t.Close
+  On Error GoTo 0
+End Sub
 
 Function PilOnPort(p)
   On Error Resume Next
@@ -250,41 +260,99 @@ Function PilOnPort(p)
   PilOnPort = (InStr(body, "Personal Instagram Library") > 0)
 End Function
 
+Function WaitForPil(p)
+  Dim i
+  For i = 1 To 20
+    If PilOnPort(p) Then WaitForPil = True : Exit Function
+    WScript.Sleep 500
+  Next
+  WaitForPil = False
+End Function
+
+Log "--- Start PIL launched ---"
+
+' Must run from the extracted folder, not from inside the zip.
+If Not fso.FileExists(fso.BuildPath(pwaDir, "index.html")) Then
+  MsgBox "Please extract the whole pil-pwa folder from the zip first," & vbCrLf & _
+         "then double-click Start PIL inside the extracted folder.", 48, "PIL"
+  WScript.Quit 1
+End If
+
 ' Already running? Just open it.
+Dim p
 For p = 8080 To 8090
   If PilOnPort(p) Then
+    Log "already running on " & p
     sh.Run "http://localhost:" & p, 1, False
     WScript.Quit
   End If
 Next
 
-' Need Python 3 on PATH.
-Dim hasPy
+' Find a real Python 3 (not the Microsoft Store stub).
+Dim oExec, pyPath, ver
+pyPath = "" : ver = ""
 On Error Resume Next
-sh.Run "cmd /c where python >nul 2>nul", 0, True
-hasPy = (Err.Number = 0)
+Set oExec = sh.Exec("cmd /c where python 2>nul")
+If Err.Number = 0 Then
+  If Not oExec.StdOut.AtEndOfStream Then pyPath = Trim(oExec.StdOut.ReadLine())
+End If
 On Error GoTo 0
-If Not hasPy Then
-  MsgBox "PIL needs Python 3: https://www.python.org/downloads/" & vbCrLf & _
-         "Install it (tick ""Add python.exe to PATH""), then try again.", 48, "PIL"
+Log "where python -> " & pyPath
+If InStr(LCase(pyPath), "windowsapps") > 0 Then
+  Log "ignoring Microsoft Store stub"
+  pyPath = ""
+End If
+If pyPath <> "" Then
+  On Error Resume Next
+  Set oExec = sh.Exec("cmd /c python --version 2>&1")
+  If Err.Number = 0 Then ver = Trim(oExec.StdOut.ReadAll())
+  On Error GoTo 0
+  Log "python --version -> " & ver
+End If
+If Left(ver, 8) <> "Python 3" Then
+  Log "no usable Python 3"
+  MsgBox "PIL couldn't find Python 3 on this computer." & vbCrLf & vbCrLf & _
+         "Install it from https://www.python.org/downloads/" & vbCrLf & _
+         "(on the first install screen, tick ""Add python.exe to PATH"")," & vbCrLf & _
+         "then double-click Start PIL again.", 48, "PIL"
   WScript.Quit 1
 End If
 
-' Start on the first free port, verify it answers, remember the PID.
-started = False
-For Each port In Array(8080, 8081, 8082)
-  Set proc = sh.Exec("python -m http.server " & port)
-  WScript.Sleep 1500
-  If PilOnPort(port) Then
-    fso.CreateTextFile(pidFile, True).Write proc.ProcessID & ":" & port
-    sh.Run "http://localhost:" & port, 1, False
-    started = True
-    Exit For
+' Start the server on the first free port and wait until it answers.
+Dim started, proc, tried
+started = False : tried = ""
+For Each p In Array(8080, 8081, 8082)
+  tried = tried & p & " "
+  Log "trying port " & p
+  On Error Resume Next
+  Set proc = sh.Exec("python -m http.server " & p)
+  If Err.Number <> 0 Then
+    Log "Exec failed: " & Err.Description
+    On Error GoTo 0
   Else
-    On Error Resume Next : proc.Terminate : On Error GoTo 0
+    On Error GoTo 0
+    If WaitForPil(p) Then
+      fso.CreateTextFile(pidFile, True).Write proc.ProcessID & ":" & p
+      Log "serving on " & p & " (pid " & proc.ProcessID & ")"
+      sh.Run "http://localhost:" & p, 1, False
+      started = True
+      Exit For
+    Else
+      Log "no answer on " & p & ", killing"
+      On Error Resume Next : proc.Terminate : On Error GoTo 0
+    End If
   End If
 Next
-If Not started Then MsgBox "Couldn't start the PIL server.", 16, "PIL"
+
+If Not started Then
+  Log "FAILED on ports " & tried
+  MsgBox "PIL couldn't start its local server." & vbCrLf & vbCrLf & _
+         "Python was found (" & ver & "), but the library didn't answer" & vbCrLf & _
+         "on ports " & Trim(tried) & "." & vbCrLf & vbCrLf & _
+         "If you're on a work network, a proxy or firewall may be blocking" & vbCrLf & _
+         "local connections. Details were saved to pil-launcher.log next" & vbCrLf & _
+         "to this file.", 16, "PIL"
+End If
 """
 
 STOP_VBS = """' Stop PIL (Windows) - double-click to stop the background server.
