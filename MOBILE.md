@@ -1,5 +1,9 @@
 # PIL on your phone
 
+> **Note:** this page is the assistant's reference for the *"Put PIL on my
+> phone"* flow. If you're a user, you don't need any of this — just ask your
+> Muse.
+
 Your PIL library can live on your phone as an installable app — the same
 answer-first search, offline, with your data never leaving your control.
 

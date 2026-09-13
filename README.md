@@ -130,7 +130,8 @@ python3 /path/to/pil/bin/mcp_server.py    # stdio; Ctrl-C to stop
 
 Wiring for Claude Code, Claude Desktop, and Cursor:
 [references/mcp_clients.md](references/mcp_clients.md). Any MCP-compatible
-client works. Available tools:
+client works — and your Muse can connect it for you if you'd rather not touch
+configs. Available tools:
 
 | Tool | What it does |
 |---|---|
@@ -199,10 +200,9 @@ pil/
 ## ❓ FAQ
 
 **Do I need to know how to code?**
-No. The one-line installer at the top of this page handles setup — copy-paste
-is the hardest part. If even that feels like too much, install the PIL skill in
-your AI assistant and say *"set up my Instagram library"*; it does everything
-with you.
+No. Copy-paste the prompt at the top of this page into Muse — it does
+everything with you. The only things you'll do yourself are linking Instagram
+(one tap in your browser) and downloading the app file it sends you.
 
 **Where does my Instagram data go?**
 Nowhere. *Code is shared, data stays home:* your saved posts, captions, and
@@ -223,9 +223,8 @@ app. On Android, tap **Install app** in Chrome; on iPhone, use Safari's
 **Share → Add to Home Screen**.
 
 **I saved new posts — how do I add them?**
-Re-run `python3 bin/ingest_saved.py` (only new posts are fetched), then
-re-run the export step for the app you use. The installer and scripts are all
-safe to re-run.
+Just tell your Muse "I saved new posts." It fetches and deep-reads only the
+new ones, then refreshes your app and files.
 
 **Can I share my library with someone?**
 Your library is files on your machine — you *can* copy them to someone else's
@@ -233,11 +232,16 @@ computer, but they contain your personal Instagram data. Treat them like
 anything private: don't publish or upload them anywhere public.
 
 **Something failed — what now?**
-Re-run the installer; it's safe to run any number of times. Make sure Python
-is 3.11 or newer (`python3 --version`). If you're stuck, see
-[🔧 Troubleshooting](#-troubleshooting) or open an issue.
+Tell your Muse what you saw — it can diagnose and fix it directly. (Running
+the manual setup below? Re-run the installer — it's safe to run any number of
+times — and check `python3 --version` is 3.11+.)
 
 ## 🔧 Troubleshooting
+
+Something wrong? Tell your Muse what happened — it can diagnose and fix most
+issues itself.
+
+Running the manual setup yourself?
 
 - `PIL account_id is not configured` → copy the example config and set
   `account_id` to your `user_fbid` from `instagram-cli accounts`.

@@ -142,6 +142,9 @@ Then install the app:
   • Phone:    python3 publish_pwa.py <app folder> --provider netlify,
               then scan the QR code with your phone.
 
-Or skip all of this: install the PIL skill in your AI assistant and say
-"set up my Instagram library" — it will walk through everything with you.
+Or skip all of this: paste this into your AI assistant and it will do the
+whole setup with you:
+
+  Clone https://github.com/pjpoulose/PIL into your workspace and follow its
+  SKILL.md to set up my Personal Instagram Library.
 EOF
