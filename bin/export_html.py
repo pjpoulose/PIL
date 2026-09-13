@@ -125,6 +125,18 @@ body{background:#141414;color:#EDE8DB;font-family:-apple-system,"Segoe UI",Inter
 .empty{padding:80px 0;text-align:center;color:#6E695D;font-family:Georgia,serif;font-style:italic;font-size:20px}
 .footer-note{text-align:center;margin-top:70px;padding-top:26px;border-top:1px solid #242424;font-size:11px;letter-spacing:2.5px;color:#6E695D;text-transform:uppercase}
 @media(max-width:900px){.body{flex-direction:column}.side{width:100%}.grid{grid-template-columns:1fr}.masthead h1{font-size:44px}.wrap{padding:0 24px 60px}}
+.digest{border:1px solid #2B2B2B;padding:28px 30px;margin-bottom:26px;background:#161616}
+.digest .dlabel{font-family:ui-monospace,monospace;font-size:11px;letter-spacing:2.5px;color:#E0453A;text-transform:uppercase;margin-bottom:8px}
+.digest h3{font-family:Georgia,serif;font-weight:400;font-size:24px;margin:0 0 6px;color:#EDE8DB}
+.digest .dsub{color:#8A8578;font-size:13px;margin-bottom:16px;line-height:1.6}
+.digest ul{list-style:none;margin:0 0 4px;padding:0}
+.digest li{margin-bottom:10px;padding-left:18px;position:relative;font-size:14px;line-height:1.65;color:#C9C3B2}
+.digest li::before{content:"—";position:absolute;left:0;color:#E0453A}
+.digest li strong{color:#EDE8DB}
+.digest .src{display:block;font-family:ui-monospace,monospace;font-size:11px;color:#6E695D;margin-top:3px}
+.digest .src a{color:#A39D8D;text-decoration:none}
+.digest .src a:hover{color:#EDE8DB}
+.digest .dist{margin-top:16px;padding-top:14px;border-top:1px solid #242424;font-size:12px;line-height:1.9;color:#8A8578;font-family:ui-monospace,monospace}
 </style>
 </head>
 <body>
@@ -175,6 +187,7 @@ body{background:#141414;color:#EDE8DB;font-family:-apple-system,"Segoe UI",Inter
           <select id="sort"><option value="new">Recently saved</option><option value="old">Oldest saved</option></select>
         </div>
       </div>
+      <div id="digest" style="display:none"></div>
       <div id="featured"></div>
       <div class="grid" id="grid"></div>
       <div class="empty" id="empty" style="display:none">Nothing in the library matches — try another search.</div>
@@ -238,8 +251,50 @@ function cardHTML(p, i, featured){
     + (notes ? '<div class="notes" id="notes-'+p.id+'"><h4>Read notes</h4>'+notes+'</div>' : '')
     + '</div><span class="rdot"></span></div>';
 }
+function renderDigest(list){
+  const el = document.getElementById('digest');
+  const active = state.q || state.room || state.tag;
+  if(!active || !list.length){ el.style.display='none'; el.innerHTML=''; return; }
+  el.style.display='block';
+  const cap = list.slice(0, 200);
+  const seen = new Map();
+  cap.forEach(p=>{
+    (p.key_points||[]).forEach(k=>{
+      const norm = String(k).toLowerCase().replace(/[^a-z0-9\s]/g,'').replace(/\s+/g,' ').trim();
+      if(norm.length < 12) return;
+      if(!seen.has(norm)) seen.set(norm, {text:k, n:0, posts:[]});
+      const e = seen.get(norm);
+      e.n++;
+      if(e.posts.length < 4) e.posts.push(p);
+    });
+  });
+  const top = [...seen.values()].sort((a,b)=>b.n-a.n).slice(0,8);
+  const rooms = {}, tags = {};
+  cap.forEach(p=>{
+    (p.folders||[]).forEach(f=>{rooms[f]=(rooms[f]||0)+1;});
+    (p.tags||[]).forEach(t=>{tags[t]=(tags[t]||0)+1;});
+  });
+  const topRooms = Object.entries(rooms).sort((a,b)=>b[1]-a[1]).slice(0,4).map(([f,n])=>esc(folderName(f))+' · '+n);
+  const topTags = Object.entries(tags).sort((a,b)=>b[1]-a[1]).slice(0,6).map(([t,n])=>'#'+esc(t));
+  let h = '<div class="dlabel mono">Digest</div><h3>What your library says'+(state.q?' about \u201c'+esc(state.q)+'\u201d':'')+'</h3>'
+    + '<div class="dsub">Extracted from '+list.length.toLocaleString()+' matching post'+(list.length===1?'':'s')+' \u2014 the key points your saved posts agree on, with sources.</div>';
+  if(top.length){
+    h += '<ul>'+top.map(e=>{
+      const src = e.posts.map(p=>'<a href="'+esc(p.url)+'" target="_blank" rel="noopener">@'+esc(p.author||'post')+'</a>').join(' \u00b7 ');
+      return '<li>'+inlineMd(e.text)+'<span class="src">'+e.n+' post'+(e.n===1?'':'s')+': '+src+(e.n>e.posts.length?' +'+(e.n-e.posts.length)+' more':'')+'</span></li>';
+    }).join('')+'</ul>';
+  } else {
+    h += '<div class="dsub">No extracted key points for these posts yet \u2014 expand individual notes below.</div>';
+  }
+  const dist = [];
+  if(topRooms.length) dist.push('Rooms \u2014 '+topRooms.join(' &nbsp;\u00b7&nbsp; '));
+  if(topTags.length) dist.push('Tags \u2014 '+topTags.join(' '));
+  if(dist.length) h += '<div class="dist">'+dist.join('<br>')+'</div>';
+  el.innerHTML = h;
+}
 function render(append){
   const list = filtered();
+  if(!append) renderDigest(list);
   const feat = document.getElementById('featured'), grid = document.getElementById('grid');
   if(!append){ feat.innerHTML=''; grid.innerHTML=''; state.shown=0; }
   const slice = list.slice(state.shown, state.shown + __PAGE__);
