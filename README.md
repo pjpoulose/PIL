@@ -154,7 +154,10 @@ Your library isn't locked to the app — point any AI tool at it:
 `web_data.json` file (it builds it with `export_web.py`): every post with its
 deep-read knowledge in one file. Attach that file to any AI chat and ask
 questions over it like any document. It's a snapshot — ask your Muse for a
-fresh copy after you save new posts.
+fresh copy after you save new posts. (File uploads are always snapshots — no
+attached file can update itself inside another AI's chat. If you want answers
+that are always current, use the MCP server option below: it reads the live
+database on every question.)
 
 **Coding assistants (Claude Code, Cursor, …)** — connect the read-only MCP
 server (`bin/mcp_server.py` over stdio) and they can search posts, read
