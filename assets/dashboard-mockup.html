@@ -2,165 +2,285 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>PIL — Personal Instagram Library (concept mockup)</title>
+<title>PIL dashboard — concept mockup (sample data)</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: #14110D; color: #EFE6D2; font-family: -apple-system, "Segoe UI", Inter, sans-serif; padding: 0 0 80px; }
+  body { background: #141414; color: #EDE8DB; font-family: -apple-system, "Segoe UI", Inter, sans-serif; -webkit-font-smoothing: antialiased; }
   .serif { font-family: Georgia, "Times New Roman", serif; }
-  header.top { display: flex; align-items: center; gap: 18px; padding: 28px 48px 22px; border-bottom: 1px solid #2A241C; }
-  .seal { width: 52px; height: 52px; border: 3px solid #EFE6D2; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: Georgia, serif; font-size: 17px; letter-spacing: 2px; position: relative; }
-  .seal::after { content: ""; position: absolute; bottom: -9px; left: 50%; transform: translateX(-50%); border: 5px solid transparent; border-top: 8px solid #C8402E; }
-  .brand h1 { font-family: Georgia, serif; font-size: 30px; font-weight: 400; letter-spacing: 1px; }
-  .brand p { font-size: 13px; color: #A79B83; letter-spacing: 3px; text-transform: uppercase; margin-top: 4px; }
-  .search { margin-left: auto; display: flex; }
-  .search input { width: 380px; background: #1E1913; border: 1px solid #3A3226; color: #EFE6D2; font-size: 15px; padding: 12px 18px; border-radius: 999px; outline: none; }
-  .search input::placeholder { color: #6E6350; }
-  .stats { display: flex; gap: 42px; padding: 26px 48px; border-bottom: 1px solid #2A241C; }
-  .stat b { font-family: Georgia, serif; font-size: 26px; font-weight: 400; display: block; }
-  .stat span { font-size: 12px; color: #A79B83; letter-spacing: 2px; text-transform: uppercase; }
-  .stat b em { color: #C8402E; font-style: normal; }
-  .rooms { display: flex; gap: 12px; padding: 26px 48px 6px; flex-wrap: wrap; }
-  .room { border: 1px solid #3A3226; border-radius: 999px; padding: 9px 20px; font-size: 14px; color: #CFC3AA; cursor: default; }
-  .room small { color: #6E6350; margin-left: 6px; }
-  .room.active { background: #EFE6D2; color: #14110D; border-color: #EFE6D2; font-weight: 600; }
-  .room.active small { color: #5A5041; }
-  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; padding: 26px 48px; }
-  .card { background: #1C1712; border: 1px solid #2A241C; border-radius: 14px; overflow: hidden; }
-  .card img { width: 100%; height: 230px; object-fit: cover; display: block; }
-  .card .body { padding: 18px 20px 20px; }
-  .creator { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: #C8402E; margin-bottom: 8px; }
-  .caption { font-family: Georgia, serif; font-size: 18px; line-height: 1.45; margin-bottom: 12px; }
-  .meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
-  .folder { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; border: 1px solid #4A4030; color: #CFC3AA; padding: 4px 10px; border-radius: 999px; }
-  .tag { font-size: 12px; color: #8A7D64; }
-  .know { font-size: 13px; color: #A79B83; border-top: 1px solid #2A241C; padding-top: 12px; }
-  .know b { color: #EFE6D2; font-weight: 600; }
-  .know .dot { color: #C8402E; margin: 0 6px; }
-  .answer { margin: 8px 48px 0; background: #1C1712; border: 1px solid #2A241C; border-left: 3px solid #C8402E; border-radius: 0 14px 14px 0; padding: 24px 28px; }
-  .answer .kicker { font-size: 12px; letter-spacing: 3px; text-transform: uppercase; color: #C8402E; margin-bottom: 10px; }
-  .answer p { font-family: Georgia, serif; font-size: 19px; line-height: 1.6; color: #EFE6D2; }
-  .answer .cites { margin-top: 12px; font-size: 13px; color: #8A7D64; }
-  .answer .cites b { color: #CFC3AA; }
-  .mocktag { position: fixed; bottom: 18px; right: 22px; font-size: 12px; letter-spacing: 2px; color: #6E6350; text-transform: uppercase; background: rgba(20,17,13,.8); padding: 6px 12px; border-radius: 6px; }
+  .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase; }
+  .progress { height: 3px; background: #E0453A; width: 220px; }
+  .wrap { max-width: 1360px; margin: 0 auto; padding: 0 48px 90px; }
+
+  /* header */
+  .masthead { display: flex; justify-content: space-between; gap: 40px; padding: 64px 0 56px; }
+  .mast-left .brand { color: #8A8578; margin-bottom: 26px; }
+  .mast-left .brand b { color: #EDE8DB; font-weight: 600; }
+  .mast-left .brand .rule { color: #E0453A; margin-right: 10px; }
+  .mast-left h1 { font-family: Georgia, serif; font-weight: 400; font-size: 64px; line-height: 1.12; letter-spacing: -0.5px; }
+  .mast-left p { margin-top: 22px; font-size: 17px; line-height: 1.6; color: #A39D8D; max-width: 420px; }
+  .index { width: 340px; flex-shrink: 0; }
+  .index .top { display: flex; justify-content: space-between; color: #8A8578; border-top: 1px solid #2B2B2B; padding-top: 14px; }
+  .index .bignum { font-family: Georgia, serif; font-size: 76px; font-weight: 400; line-height: 1; margin: 14px 0 4px; }
+  .index .bignum-sub { text-align: right; color: #8A8578; }
+  .index .cov { border-top: 1px solid #2B2B2B; margin-top: 18px; padding-top: 14px; }
+  .index .cov .row1 { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 12px; }
+  .index .cov .row1 span:last-child { color: #6E695D; letter-spacing: 1px; font-size: 12px; }
+  .covgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 20px; }
+  .covgrid b { font-family: ui-monospace, monospace; font-size: 15px; font-weight: 600; display: block; }
+  .covgrid span { font-size: 10px; letter-spacing: 2px; color: #6E695D; text-transform: uppercase; }
+  .index .totals { display: flex; border-top: 1px solid #2B2B2B; margin-top: 16px; padding-top: 14px; }
+  .index .totals div { flex: 1; }
+  .index .totals div + div { border-left: 1px solid #2B2B2B; padding-left: 20px; }
+  .index .totals b { font-family: Georgia, serif; font-size: 24px; font-weight: 400; display: block; }
+  .index .totals span { font-size: 10px; letter-spacing: 2px; color: #6E695D; text-transform: uppercase; }
+
+  /* search */
+  .searchbar { background: #F2EEE2; border-radius: 3px; display: flex; align-items: center; padding: 20px 26px; margin-bottom: 54px; }
+  .searchbar .icon { color: #141414; font-size: 18px; margin-right: 14px; }
+  .searchbar .ph { font-family: Georgia, serif; font-style: italic; font-size: 19px; color: #6E695D; flex: 1; }
+  .searchbar .kbd { border: 1px solid #C9C3B2; color: #6E695D; font-size: 13px; padding: 4px 10px; border-radius: 3px; font-family: ui-monospace, monospace; }
+
+  /* body layout */
+  .body { display: flex; gap: 56px; }
+  .side { width: 220px; flex-shrink: 0; }
+  .side .label { color: #6E695D; margin-bottom: 6px; }
+  .room { display: flex; justify-content: space-between; align-items: center; padding: 11px 2px; border-bottom: 1px solid #242424; font-size: 14px; color: #C9C3B2; }
+  .room .n { font-family: ui-monospace, monospace; font-size: 12px; color: #6E695D; }
+  .room.active { color: #EDE8DB; font-weight: 600; }
+  .room.active .dot { width: 7px; height: 7px; background: #E0453A; border-radius: 50%; display: inline-block; margin-right: 9px; }
+  .tags-label { color: #6E695D; margin: 34px 0 14px; }
+  .tagchips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { border: 1px solid #2B2B2B; padding: 8px 12px; font-family: ui-monospace, monospace; font-size: 11px; color: #A39D8D; }
+  .deepnotes { margin-top: 26px; font-size: 12px; color: #6E695D; }
+  .deepnotes i { width: 7px; height: 7px; background: #E0453A; border-radius: 50%; display: inline-block; margin-right: 8px; font-style: normal; }
+
+  .main { flex: 1; min-width: 0; }
+  .browse-head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 34px; }
+  .browse-head h2 { font-family: Georgia, serif; font-weight: 400; font-size: 44px; }
+  .browse-head .sub { font-family: ui-monospace, monospace; font-size: 12px; color: #6E695D; margin-top: 8px; }
+  .sort { display: flex; align-items: center; gap: 12px; color: #6E695D; }
+  .sort .box { border: 1px solid #2B2B2B; padding: 10px 16px; font-family: ui-monospace, monospace; font-size: 12px; color: #C9C3B2; }
+
+  /* cards */
+  .card { margin-bottom: 44px; }
+  .panel { border-radius: 3px; padding: 44px 48px; position: relative; overflow: hidden; }
+  .panel::before { content: ""; position: absolute; width: 420px; height: 420px; border: 1px solid rgba(255,255,255,.07); border-radius: 50%; right: -120px; top: -120px; }
+  .panel .prow { display: flex; justify-content: space-between; margin-bottom: 30px; position: relative; }
+  .panel .prow .mono { color: rgba(237,232,219,.75); }
+  .panel .pnum { font-family: ui-monospace, monospace; font-size: 11px; letter-spacing: 2px; color: rgba(237,232,219,.55); }
+  .panel h3 { font-family: Georgia, serif; font-weight: 400; font-size: 40px; line-height: 1.28; position: relative; }
+  .card.featured .panel h3 { font-size: 46px; }
+  .meta { padding: 18px 4px 0; }
+  .meta .kind { color: #8A8578; margin-bottom: 8px; }
+  .meta .who { font-family: ui-monospace, monospace; font-size: 13px; color: #C9C3B2; }
+  .meta .rooms { font-family: ui-monospace, monospace; font-size: 12px; color: #6E695D; margin-top: 6px; }
+  .meta .foot { display: flex; justify-content: space-between; border-top: 1px solid #242424; margin-top: 16px; padding-top: 14px; font-size: 13px; color: #8A8578; }
+  .meta .foot .ig { color: #A39D8D; }
+  .card { position: relative; }
+  .card .rdot { position: absolute; right: -2px; top: 46%; width: 7px; height: 7px; background: #E0453A; border-radius: 50%; }
+
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 40px; }
+  .grid .panel { padding: 34px 36px; }
+  .grid .panel h3 { font-size: 27px; }
+
+  .more { text-align: center; margin-top: 20px; }
+  .more span { border: 1px solid #2B2B2B; padding: 14px 30px; font-family: ui-monospace, monospace; font-size: 12px; letter-spacing: 2px; color: #A39D8D; }
+
+  .footer-note { text-align: center; margin-top: 70px; padding-top: 26px; border-top: 1px solid #242424; font-size: 11px; letter-spacing: 2.5px; color: #6E695D; text-transform: uppercase; }
+
+  .c1 { background: #4A2B28; } .c2 { background: #2E3A30; } .c3 { background: #2B2E45; }
+  .c4 { background: #3A362A; } .c5 { background: #3A2A3E; } .c6 { background: #2A3B3B; }
+  .c7 { background: #43301F; } .c8 { background: #33302B; } .c9 { background: #3E2A2E; }
 </style>
 </head>
 <body>
+<div class="progress"></div>
+<div class="wrap">
 
-<header class="top">
-  <div class="seal">PIL</div>
-  <div class="brand">
-    <h1>Personal Instagram Library</h1>
-    <p>Rediscover what caught your eye</p>
+  <div class="masthead">
+    <div class="mast-left">
+      <div class="brand mono"><span class="rule">—</span> <b>PIL</b> &nbsp;|&nbsp; PERSONAL INSTAGRAM LIBRARY</div>
+      <h1>Rediscover what<br>caught your eye.</h1>
+      <p>Search the ideas, tutorials, recipes, tools, and rabbit holes you saved for later.</p>
+    </div>
+    <div class="index">
+      <div class="top mono"><span>PIL Index</span><span>Personal Library</span></div>
+      <div class="bignum">6,214</div>
+      <div class="bignum-sub mono">Saved<br>posts</div>
+      <div class="cov">
+        <div class="row1"><span class="mono">Field coverage</span><span>Varies by post</span></div>
+        <div class="covgrid">
+          <div><b>5,480</b><span>Summaries</span></div>
+          <div><b>4,120</b><span>Key points</span></div>
+          <div><b>3,105</b><span>How-to guides</span></div>
+          <div><b>208</b><span>Links</span></div>
+        </div>
+      </div>
+      <div class="totals">
+        <div><b>6,214</b><span>Posts with knowledge</span></div>
+        <div><b>9</b><span>Rooms</span></div>
+      </div>
+    </div>
   </div>
-  <div class="search"><input placeholder="Search 6,214 posts — try &quot;weeknight pasta&quot;"></div>
-</header>
 
-<div class="stats">
-  <div class="stat"><b>6,214</b><span>posts with knowledge</span></div>
-  <div class="stat"><b>5</b><span>rooms</span></div>
-  <div class="stat"><b>18,402</b><span>tags</span></div>
-  <div class="stat"><b><em>912</em></b><span>links discussed</span></div>
+  <div class="searchbar">
+    <span class="icon">⌕</span>
+    <span class="ph">Search PIL…</span>
+    <span class="kbd">/</span>
+  </div>
+
+  <div class="body">
+    <div class="side">
+      <div class="label mono">Rooms</div>
+      <div class="room active"><span><span class="dot"></span>Everything</span><span class="n">6,214</span></div>
+      <div class="room"><span>Recipes</span><span class="n">1,208</span></div>
+      <div class="room"><span>Home &amp; Garden</span><span class="n">874</span></div>
+      <div class="room"><span>Tech</span><span class="n">518</span></div>
+      <div class="room"><span>Travel</span><span class="n">330</span></div>
+      <div class="room"><span>Fitness</span><span class="n">196</span></div>
+      <div class="room"><span>Finance</span><span class="n">48</span></div>
+      <div class="room"><span>Style</span><span class="n">14</span></div>
+      <div class="room"><span>Misc</span><span class="n">1</span></div>
+      <div class="tags-label mono">Popular tags</div>
+      <div class="tagchips">
+        <span class="chip">sourdough · 743</span><span class="chip">typography · 687</span><span class="chip">notion · 570</span><span class="chip">espresso · 415</span><span class="chip">trail · 392</span><span class="chip">python · 367</span><span class="chip">figma · 320</span><span class="chip">mealprep · 301</span><span class="chip">cabin · 266</span><span class="chip">budget · 214</span><span class="chip">kettlebell · 207</span><span class="chip">sketch · 172</span><span class="chip">bread · 163</span><span class="chip">api · 162</span>
+      </div>
+      <div class="deepnotes"><i></i>Deep notes available</div>
+    </div>
+
+    <div class="main">
+      <div class="browse-head">
+        <div><h2>Browse PIL</h2><div class="sub">6,214 posts</div></div>
+        <div class="sort mono">Sort <span class="box">Recently saved ▾</span></div>
+      </div>
+
+      <div class="card featured">
+        <div class="panel c1">
+          <div class="prow"><span class="mono">Recipes</span><span class="pnum">0001</span></div>
+          <h3>A home cook walks through a 15-minute creamy garlic pasta, finishing the sauce in the pan with starchy pasta water instead of…</h3>
+        </div>
+        <div class="meta">
+          <div class="kind mono">Video</div>
+          <div class="who">@bakewithmia</div>
+          <div class="rooms">Recipes</div>
+          <div class="foot"><span>Read notes</span><span class="ig">Instagram ↗</span></div>
+        </div>
+        <span class="rdot"></span>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <div class="panel c2">
+            <div class="prow"><span class="mono">Tech</span><span class="pnum">0002</span></div>
+            <h3>A screen recording breaks down a RAG pipeline — chunk, embed, retrieve, rerank — and where most tutorials get retrieval…</h3>
+          </div>
+          <div class="meta">
+            <div class="kind mono">Video</div>
+            <div class="who">@aibuilderdaily</div>
+            <div class="rooms">Tech</div>
+            <div class="foot"><span>Read notes</span><span class="ig">↗ 2 links &nbsp;&nbsp; Instagram ↗</span></div>
+          </div>
+          <span class="rdot"></span>
+        </div>
+        <div class="card">
+          <div class="panel c3">
+            <div class="prow"><span class="mono">Home &amp; Garden</span><span class="pnum">0003</span></div>
+            <h3>A designer tours a Japandi living room: low oak furniture, limewash walls, and one sculptural paper light…</h3>
+          </div>
+          <div class="meta">
+            <div class="kind mono">Video</div>
+            <div class="who">@studiomoss</div>
+            <div class="rooms">Home &amp; Garden</div>
+            <div class="foot"><span>Read notes</span><span class="ig">Instagram ↗</span></div>
+          </div>
+          <span class="rdot"></span>
+        </div>
+        <div class="card">
+          <div class="panel c4">
+            <div class="prow"><span class="mono">Fitness</span><span class="pnum">0004</span></div>
+            <h3>A coach demonstrates a 20-minute kettlebell flow for small apartments — no jumping, neighbors safe…</h3>
+          </div>
+          <div class="meta">
+            <div class="kind mono">Video</div>
+            <div class="who">@fitwithsam</div>
+            <div class="rooms">Fitness</div>
+            <div class="foot"><span>Read notes</span><span class="ig">Instagram ↗</span></div>
+          </div>
+          <span class="rdot"></span>
+        </div>
+        <div class="card">
+          <div class="panel c5">
+            <div class="prow"><span class="mono">Travel</span><span class="pnum">0005</span></div>
+            <h3>A travel creator wanders a pink hilltop village in Spain and maps a two-day walking route through it…</h3>
+          </div>
+          <div class="meta">
+            <div class="kind mono">Video</div>
+            <div class="who">@wanderlena</div>
+            <div class="rooms">Travel</div>
+            <div class="foot"><span>Read notes</span><span class="ig">↗ 3 links &nbsp;&nbsp; Instagram ↗</span></div>
+          </div>
+          <span class="rdot"></span>
+        </div>
+        <div class="card">
+          <div class="panel c6">
+            <div class="prow"><span class="mono">Recipes</span><span class="pnum">0006</span></div>
+            <h3>A baker shows a no-knead focaccia with rosemary sea salt — five minutes of actual hands-on work…</h3>
+          </div>
+          <div class="meta">
+            <div class="kind mono">Video</div>
+            <div class="who">@bakewithmia</div>
+            <div class="rooms">Recipes</div>
+            <div class="foot"><span>Read notes</span><span class="ig">↗ 1 link &nbsp;&nbsp; Instagram ↗</span></div>
+          </div>
+          <span class="rdot"></span>
+        </div>
+        <div class="card">
+          <div class="panel c7">
+            <div class="prow"><span class="mono">Finance</span><span class="pnum">0007</span></div>
+            <h3>Context A carousel breaks down a three-account budget system for freelancers with irregular income…</h3>
+          </div>
+          <div class="meta">
+            <div class="kind mono">Carousel</div>
+            <div class="who">@budgetwise</div>
+            <div class="rooms">Finance</div>
+            <div class="foot"><span>Read notes</span><span class="ig">Instagram ↗</span></div>
+          </div>
+          <span class="rdot"></span>
+        </div>
+        <div class="card">
+          <div class="panel c8">
+            <div class="prow"><span class="mono">Tech</span><span class="pnum">0008</span></div>
+            <h3>A developer explains prompt caching with a before-and-after API bill — down 68% after one config change…</h3>
+          </div>
+          <div class="meta">
+            <div class="kind mono">Video</div>
+            <div class="who">@aibuilderdaily</div>
+            <div class="rooms">Tech</div>
+            <div class="foot"><span>Read notes</span><span class="ig">Instagram ↗</span></div>
+          </div>
+          <span class="rdot"></span>
+        </div>
+        <div class="card">
+          <div class="panel c9">
+            <div class="prow"><span class="mono">Home &amp; Garden</span><span class="pnum">0009</span></div>
+            <h3>A renter-friendly makeover: peel-and-stick backsplash, warm bulbs, and a tension-rod curtain trick…</h3>
+          </div>
+          <div class="meta">
+            <div class="kind mono">Video</div>
+            <div class="who">@studiomoss</div>
+            <div class="rooms">Home &amp; Garden</div>
+            <div class="foot"><span>Read notes</span><span class="ig">↗ 1 link &nbsp;&nbsp; Instagram ↗</span></div>
+          </div>
+          <span class="rdot"></span>
+        </div>
+      </div>
+
+      <div class="more"><span>SHOW MORE · 6,205 REMAINING</span></div>
+
+      <div class="footer-note">Concept mockup — sample data, not a real library</div>
+    </div>
+  </div>
+
 </div>
-
-<div class="answer">
-  <div class="kicker">Synthesized answer</div>
-  <p>The fastest weeknight pastas in your library share one trick: the sauce finishes <i>in the pan</i>, emulsified with starchy pasta water — never jarred sauce reheated separately.</p>
-  <div class="cites">Grounded in <b>3 posts</b> — @bakewithmia · @nonnacooks · @pastalab</div>
-</div>
-
-<div class="rooms">
-  <div class="room active">All <small>6,214</small></div>
-  <div class="room">AI &amp; Tech <small>1,208</small></div>
-  <div class="room">Recipes <small>342</small></div>
-  <div class="room">Home Design <small>518</small></div>
-  <div class="room">Life Hacks <small>276</small></div>
-  <div class="room">Travel <small>194</small></div>
-</div>
-
-<div class="grid">
-  <div class="card">
-    <img src="mock-imgs/pilpasta.jpg" alt="">
-    <div class="body">
-      <div class="creator">@bakewithmia</div>
-      <div class="caption">15-minute creamy garlic parmesan pasta — the weeknight hero your rotation is missing</div>
-      <div class="meta"><span class="folder">Recipes</span><span class="tag">#pasta</span><span class="tag">#15-min</span><span class="tag">#dinner</span></div>
-      <div class="know"><b>Summary</b><span class="dot">·</span><b>Key points</b><span class="dot">·</span><b>How-to</b><span class="dot">·</span>1 link</div>
-    </div>
-  </div>
-  <div class="card">
-    <img src="mock-imgs/pilrag.jpg" alt="">
-    <div class="body">
-      <div class="creator">@aibuilderdaily</div>
-      <div class="caption">RAG pipeline anatomy: chunk, embed, retrieve, rerank — where most tutorials get it wrong</div>
-      <div class="meta"><span class="folder">AI &amp; Tech</span><span class="tag">#rag</span><span class="tag">#llm</span><span class="tag">#architecture</span></div>
-      <div class="know"><b>Summary</b><span class="dot">·</span><b>Key points</b><span class="dot">·</span>2 links</div>
-    </div>
-  </div>
-  <div class="card">
-    <img src="mock-imgs/piljapandi.jpg" alt="">
-    <div class="body">
-      <div class="creator">@studiomoss</div>
-      <div class="caption">Japandi living room: low oak furniture, limewash walls, one sculptural light</div>
-      <div class="meta"><span class="folder">Home Design</span><span class="tag">#japandi</span><span class="tag">#living-room</span></div>
-      <div class="know"><b>Summary</b><span class="dot">·</span><b>Key points</b><span class="dot">·</span><b>How-to</b></div>
-    </div>
-  </div>
-  <div class="card">
-    <img src="mock-imgs/piltension.jpg" alt="">
-    <div class="body">
-      <div class="creator">@hackdad</div>
-      <div class="caption">Tension rod under the sink turns dead space into a spray-bottle organizer</div>
-      <div class="meta"><span class="folder">Life Hacks</span><span class="tag">#organization</span><span class="tag">#kitchen</span></div>
-      <div class="know"><b>Summary</b><span class="dot">·</span><b>How-to</b></div>
-    </div>
-  </div>
-  <div class="card">
-    <img src="mock-imgs/pilvillage.jpg" alt="">
-    <div class="body">
-      <div class="creator">@wanderlena</div>
-      <div class="caption">Albarracín, Spain: the pink hilltop village you've never heard of — go before everyone else does</div>
-      <div class="meta"><span class="folder">Travel</span><span class="tag">#spain</span><span class="tag">#hidden-gems</span></div>
-      <div class="know"><b>Summary</b><span class="dot">·</span><b>Key points</b><span class="dot">·</span>3 links</div>
-    </div>
-  </div>
-  <div class="card">
-    <img src="mock-imgs/pilfocaccia.jpg" alt="">
-    <div class="body">
-      <div class="creator">@bakewithmia</div>
-      <div class="caption">No-knead focaccia with rosemary sea salt — 5 minutes of actual work</div>
-      <div class="meta"><span class="folder">Recipes</span><span class="tag">#bread</span><span class="tag">#no-knead</span></div>
-      <div class="know"><b>Summary</b><span class="dot">·</span><b>Key points</b><span class="dot">·</span><b>How-to</b><span class="dot">·</span>1 link</div>
-    </div>
-  </div>
-  <div class="card">
-    <img src="mock-imgs/pilcache.jpg" alt="">
-    <div class="body">
-      <div class="creator">@aibuilderdaily</div>
-      <div class="caption">Prompt caching cut our API bill 68% — here's the exact setup that worked</div>
-      <div class="meta"><span class="folder">AI &amp; Tech</span><span class="tag">#cost</span><span class="tag">#llm</span><span class="tag">#caching</span></div>
-      <div class="know"><b>Summary</b><span class="dot">·</span><b>Key points</b><span class="dot">·</span><b>How-to</b></div>
-    </div>
-  </div>
-  <div class="card">
-    <img src="mock-imgs/pilbedroom.jpg" alt="">
-    <div class="body">
-      <div class="creator">@studiomoss</div>
-      <div class="caption">Small bedroom, big storage: platform bed with drawers beats a dresser every time</div>
-      <div class="meta"><span class="folder">Home Design</span><span class="tag">#small-spaces</span><span class="tag">#storage</span></div>
-      <div class="know"><b>Summary</b><span class="dot">·</span><b>Key points</b></div>
-    </div>
-  </div>
-  <div class="card">
-    <img src="mock-imgs/pilsoup.jpg" alt="">
-    <div class="body">
-      <div class="creator">@hackdad</div>
-      <div class="caption">Freeze soup portions flat in bags — they thaw in minutes and stack like files</div>
-      <div class="meta"><span class="folder">Life Hacks</span><span class="tag">#freezer</span><span class="tag">#meal-prep</span></div>
-      <div class="know"><b>Summary</b><span class="dot">·</span><b>How-to</b><span class="dot">·</span>1 link</div>
-    </div>
-  </div>
-</div>
-
-<div class="mocktag">Concept mockup — sample data</div>
 </body>
 </html>
