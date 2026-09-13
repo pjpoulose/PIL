@@ -30,7 +30,7 @@
 > **3.** Download the app file it sends you → unzip → double-click **Start PIL** → click **Install**.
 >
 > That's the whole thing. Your Muse does the setup, the reading, and the building.
-> For your phone afterward, see [📱 Take it on your phone](#-take-it-on-your-phone).
+> Want it on your phone too? Just ask your Muse — it handles that as well.
 >
 > <details>
 > <summary>Prefer to do it yourself? One command sets everything up.</summary>
@@ -104,12 +104,7 @@ python3 bin/mcp_server.py    # read-only, stdio — Ctrl-C to stop
 That's it. Re-run `ingest_saved.py` whenever you save new posts; `extract_content.py`
 only processes posts it hasn't seen yet.
 
-**Install it like an app** — no Python needed from here on:
-
-- **Computer:** [Get the browser install prompt](#get-the-browser-install-prompt-pwa--one-click)
-  — unzip the PWA folder, double-click the launcher for your OS, click Install.
-- **Phone:** [Take it on your phone](#-take-it-on-your-phone) — one publish
-  command, then scan the QR code with your phone.
+**The app:** ask your Muse to build and send it — see [📲 Your library as an app](#-your-library-as-an-app).
 
 </details>
 
@@ -161,74 +156,19 @@ ask your Muse for a fresh copy after you save new posts.
 These files hold your personal Instagram data — keep them on your own machine
 and only share them with tools you trust.
 
-## 🖥️ Your library as a desktop web app
+## 📲 Your library as an app
 
-`export_html.py` writes `<data_dir>/pil_library.html` — a single self-contained
-file with your whole library: search, rooms, tags, sorting, and expandable
-read-notes per post. No server, no network; it works straight from disk.
+Your Muse builds the app for you and sends it to you — for your computer and
+your phone. Just ask:
 
-**Keep it on your desktop like an app:**
+- *"Send me my PIL app"* — download the file it sends you, unzip, double-click
+  **Start PIL**, click **Install**. It lives on your computer like any other
+  app and works fully offline.
+- *"Put PIL on my phone"* — it handles the publishing and gives you a QR code
+  to scan. Tap **Install** (Android) or **Share → Add to Home Screen**
+  (iPhone).
 
-1. Run `python3 bin/export_html.py`, then move `pil_library.html` to your Desktop
-   (or anywhere you like).
-2. Double-click it — it opens in your browser, fully offline.
-3. To make it feel like a real app window instead of a browser tab:
-   - **Chrome / Edge:** ⋮ menu → *More tools* → *Create shortcut…* → tick
-     *Open as window* → Create. Launch it from your dock/taskbar from then on.
-   - **Safari:** *File* → *Add to Dock…* (macOS Sonoma and later).
-   - **Firefox:** double-click the file, or drag it to the dock/taskbar for a
-     one-click opener.
-
-Re-run `export_html.py` whenever you save new posts to refresh it. The file
-holds your data, so keep it on your own machine like anything personal.
-
-### Get the browser install prompt (PWA) — one click
-
-Prefer the real *Install app* prompt over a manual shortcut? `export_pwa.py`
-builds a small installable bundle — `index.html`, `manifest.json`, an offline
-service worker, icons, **and one-click launchers** — into `<data_dir>/pwa/`:
-
-```bash
-python3 bin/export_pwa.py
-```
-
-Then it's three steps, no terminal skills needed:
-
-1. Unzip the `pwa` folder anywhere.
-2. Launch it:
-   - **Mac**: double-click `Make Mac App.command` once — it builds a polished
-     `Start PIL.app` (proper icon, no terminal window). From then on,
-     double-click the app. First launch: right-click → *Open* to clear
-     Apple's one-time check.
-   - **Windows**: double-click `Start PIL.vbs` — no console window.
-     `Stop PIL.vbs` stops the server when you're done.
-   - **Linux**: double-click (or run) `Start PIL.command`.
-3. Click **Install** in the browser's address bar (Chrome/Edge).
-
-`localhost` counts as a secure context in every browser, so installation and
-offline mode work with no HTTPS setup. What each browser does:
-
-- **Chrome / Edge** (desktop & Android): offers the **Install** prompt
-  automatically once the page loads.
-- **Safari** (macOS): *File → Add to Dock…*; (iOS): *Share → Add to Home
-  Screen*. No auto-prompt — Apple reserves that for the menu, by design.
-- **Firefox**: *Add to Home Screen* (Android), or bookmark / pin the
-  localhost page manually on desktop.
-
-The single-file `pil_library.html` above keeps working as before for anyone
-who'd rather just double-click a file — no server needed.
-
-### 📱 Take it on your phone
-
-Phones can't reach the desktop launcher — they need the PWA on `https`. One
-command publishes the bundle to hosting you control, then your phone installs
-it like a native app (Android: Chrome → Install app · iPhone: Safari → Share
-→ Add to Home Screen). Fully offline after the first load. See
-[MOBILE.md](MOBILE.md):
-
-```bash
-python3 bin/publish_pwa.py <data_dir>/pwa --provider netlify
-```
+No commands, no hosting setup, no terminal — your Muse takes care of all of it.
 
 ## 📦 What's inside
 
