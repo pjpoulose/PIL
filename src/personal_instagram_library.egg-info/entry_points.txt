@@ -1,9 +1,0 @@
-[console_scripts]
-pil-export-html = pil.export_html:main
-pil-export-pwa = pil.export_pwa:main
-pil-export-web = pil.export_web:main
-pil-extract = pil.extract_content:main
-pil-ingest = pil.ingest_saved:main
-pil-mcp = pil.mcp_server:main
-pil-publish-pwa = pil.publish_pwa:main
-pil-tag = pil.tag_all:main
