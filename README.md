@@ -12,7 +12,7 @@
 [![Cursor](https://img.shields.io/badge/Cursor-supported-111111)](references/mcp_clients.md)
 [![Claude Desktop](https://img.shields.io/badge/Claude_Desktop-supported-CC785C)](references/mcp_clients.md)
 
-**<img src="assets/icons/launch.svg" width="16"> Get started · [<img src="assets/icons/cycle.svg" width="16"> How it works](#how-it-works) · [<img src="assets/icons/chip.svg" width="16"> Other AI tools](#ask-your-library-from-other-ai-tools) · [<img src="assets/icons/box.svg" width="16"> What's inside](#whats-inside)**
+**Get started · [How it works](#how-it-works) · [Other AI tools](#ask-your-library-from-other-ai-tools) · [What's inside](#whats-inside)**
 
 ---
 
@@ -51,13 +51,13 @@ Every day you save posts you'll never find again. **PIL (Personal Instagram Libr
 
 *Concept mockup with sample data — your library looks like this, with your posts.*
 
-### <img src="assets/icons/chip.svg" width="22"> Want your Claude, Codex, or Cursor to access this?
+### ![](assets/icons/chip.svg#gh-light-mode-only)![](assets/icons/dark/chip.svg#gh-dark-mode-only) Want your Claude, Codex, or Cursor to access this?
 
 Connect the read-only MCP server and your other AI tools can query your library
 live — always current, nothing to re-upload. Your Muse can wire it up for you.
 [How to connect →](#ask-your-library-from-other-ai-tools)
 
-## <img src="assets/icons/cycle.svg" width="22"> How it works
+## ![](assets/icons/cycle.svg#gh-light-mode-only)![](assets/icons/dark/cycle.svg#gh-dark-mode-only) How it works
 
 ```mermaid
 flowchart LR
@@ -68,7 +68,7 @@ flowchart LR
     D --> F["Static JSON export — any AI tool"]
 ```
 
-## <img src="assets/icons/wrench.svg" width="22"> Manual setup (do it yourself)
+## ![](assets/icons/wrench.svg#gh-light-mode-only)![](assets/icons/dark/wrench.svg#gh-dark-mode-only) Manual setup (do it yourself)
 
 <details>
 <summary>Expand — only needed if you're skipping the 3-step Muse flow at the top.</summary>
@@ -114,7 +114,7 @@ only processes posts it hasn't seen yet.
 
 </details>
 
-## <img src="assets/icons/columns.svg" width="22"> Why not just scroll your saved tab?
+## ![](assets/icons/columns.svg#gh-light-mode-only)![](assets/icons/dark/columns.svg#gh-dark-mode-only) Why not just scroll your saved tab?
 
 | | Instagram saved tab | PIL |
 |---|---|---|
@@ -124,7 +124,7 @@ only processes posts it hasn't seen yet.
 | Use it inside your AI tools | Screenshots and retyping | MCP server or JSON export |
 | Where your data lives | Meta's servers | Your machine, SQLite |
 
-## <img src="assets/icons/chip.svg" width="22"> Ask your library from other AI tools
+## ![](assets/icons/chip.svg#gh-light-mode-only)![](assets/icons/dark/chip.svg#gh-dark-mode-only) Ask your library from other AI tools
 
 **Live (recommended): MCP.** Point any MCP-compatible assistant at the
 read-only server and every question reads your current database — always
@@ -163,7 +163,7 @@ ask your Muse for a fresh copy after you save new posts.
 These files hold your personal Instagram data — keep them on your own machine
 and only share them with tools you trust.
 
-## <img src="assets/icons/phone.svg" width="22"> Your library as an app
+## ![](assets/icons/phone.svg#gh-light-mode-only)![](assets/icons/dark/phone.svg#gh-dark-mode-only) Your library as an app
 
 Your Muse builds the app for you and sends it to you — for your computer and
 your phone. Just ask:
@@ -177,7 +177,7 @@ your phone. Just ask:
 
 No commands, no hosting setup, no terminal — your Muse takes care of all of it.
 
-## <img src="assets/icons/box.svg" width="22"> What's inside
+## ![](assets/icons/box.svg#gh-light-mode-only)![](assets/icons/dark/box.svg#gh-dark-mode-only) What's inside
 
 ```
 pil/
@@ -203,7 +203,7 @@ pil/
     └── mcp_clients.md       # Cursor / Claude Code / Claude Desktop wiring
 ```
 
-## <img src="assets/icons/question.svg" width="22"> FAQ
+## ![](assets/icons/question.svg#gh-light-mode-only)![](assets/icons/dark/question.svg#gh-dark-mode-only) FAQ
 
 **Do I need to know how to code?**
 No. Copy-paste the prompt at the top of this page into Muse — it does
@@ -242,7 +242,7 @@ Tell your Muse what you saw — it can diagnose and fix it directly. (Running
 the manual setup below? Re-run the installer — it's safe to run any number of
 times — and check `python3 --version` is 3.11+.)
 
-## <img src="assets/icons/gear.svg" width="22"> Troubleshooting
+## ![](assets/icons/gear.svg#gh-light-mode-only)![](assets/icons/dark/gear.svg#gh-dark-mode-only) Troubleshooting
 
 Something wrong? Tell your Muse what happened — it can diagnose and fix most
 issues itself.
@@ -255,12 +255,12 @@ Running the manual setup yourself?
 - `429` rate limits are handled with backoff inside the scripts.
 - The MCP server needs `mcp<2` in the Python that runs it (2.x renamed the API).
 
-## <img src="assets/icons/users.svg" width="22"> Contributing
+## ![](assets/icons/users.svg#gh-light-mode-only)![](assets/icons/dark/users.svg#gh-dark-mode-only) Contributing
 
 PRs and issues welcome — better extraction prompts, new query clients, new
 export formats. Fork it, ship it, make it yours. If it saved you from the
 endless scroll, a star helps others find it.
 
-## <img src="assets/icons/doc.svg" width="22"> License
+## ![](assets/icons/doc.svg#gh-light-mode-only)![](assets/icons/dark/doc.svg#gh-dark-mode-only) License
 
 MIT. Built by [Paul Poulose](https://github.com/pjpoulose).
