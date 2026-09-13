@@ -10,6 +10,21 @@ never leaves the machine.
 
 ## Install the MCP server
 
+Option A — PyPI (recommended):
+
+1. `pip install personal-instagram-library` (needs Python 3.10+)
+2. Register it with the MCP client:
+   ```json
+   {
+     "mcpServers": {
+       "pil": { "command": "pil-mcp", "args": [] }
+     }
+   }
+   ```
+   (`uvx personal-instagram-library` / `pipx run` also work; the entry point is `pil-mcp`.)
+
+Option B — from source:
+
 1. `git clone https://github.com/pjpoulose/PIL.git && cd PIL`
 2. `pip install "mcp<2"` (needs Python 3.10+)
 3. Register it with the MCP client:

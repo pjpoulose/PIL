@@ -11,3 +11,4 @@ __pycache__/
 
 # mockup build artifacts
 assets/mock-imgs/
+dist

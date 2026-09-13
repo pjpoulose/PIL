@@ -13,8 +13,27 @@ import json
 import os
 import sqlite3
 
-SKILL_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SCHEMA_PATH = os.path.join(SKILL_DIR, "schema.sql")
+def _find_schema():
+    """Locate schema.sql: installed package data first, repo checkout fallback."""
+    try:
+        from importlib.resources import files
+        cand = files("pil") / "data" / "schema.sql"
+        if cand.is_file():
+            return str(cand)
+    except Exception:
+        pass
+    # repo checkout fallback (src/pil -> repo root)
+    here = os.path.dirname(os.path.abspath(__file__))
+    for cand in (
+        os.path.join(here, "data", "schema.sql"),
+        os.path.abspath(os.path.join(here, "..", "..", "schema.sql")),
+    ):
+        if os.path.isfile(cand):
+            return cand
+    raise SystemExit("PIL schema.sql not found (looked in package data and repo root).")
+
+
+SCHEMA_PATH = _find_schema()
 
 
 def load_config():

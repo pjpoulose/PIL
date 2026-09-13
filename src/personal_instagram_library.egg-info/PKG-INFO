@@ -1,3 +1,27 @@
+Metadata-Version: 2.4
+Name: personal-instagram-library
+Version: 0.1.0
+Summary: PIL — Personal Instagram Library: a local-first saved-post knowledge base with a read-only MCP server
+Author: Paul Poulose
+License: MIT
+Project-URL: Homepage, https://github.com/pjpoulose/PIL
+Project-URL: Repository, https://github.com/pjpoulose/PIL
+Keywords: mcp,model-context-protocol,instagram,knowledge-base,sqlite,local-first
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: End Users/Desktop
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Topic :: Database
+Classifier: Topic :: Scientific/Engineering :: Information Analysis
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: mcp<2
+Dynamic: license-file
+
 <p align="center">
   <img src="assets/logo.svg" width="160" alt="PIL logo">
 </p>
@@ -78,12 +102,7 @@ account linked (run `instagram-cli accounts` — it must list your account).
 The one-line installer at the top of this page handles all of this for you.
 
 ```bash
-# 1a. Install from PyPI (recommended — no clone needed)
-pip install personal-instagram-library
-# gives you: pil-mcp pil-ingest pil-extract pil-tag
-#            pil-export-web pil-export-html pil-export-pwa pil-publish-pwa
-
-# 1b. Or get the code
+# 1. Get the code
 git clone https://github.com/pjpoulose/PIL.git pil && cd pil
 
 # 2. Configure (your data lives in data_dir, default ~/.local/share/pil)
