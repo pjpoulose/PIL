@@ -1,0 +1,19 @@
+# Smithery configuration — https://smithery.ai/docs/config#smitheryyaml
+# PIL runs as a local stdio server ON PURPOSE: it reads the user's own
+# pil.sqlite (built by the PIL skill pipeline), so the server must run
+# next to the data. A hosted HTTP runtime would see an empty library.
+startCommand:
+  type: stdio
+  configSchema:
+    # JSON Schema defining the configuration options for the MCP.
+    type: object
+    properties: {}
+  commandFunction:
+    # A JS function that produces the CLI command to start the MCP on stdio.
+    |-
+    (config) => ({
+      command: 'uvx',
+      args: ['--from', 'personal-instagram-library', 'pil-mcp'],
+      env: {}
+    })
+  exampleConfig: {}
